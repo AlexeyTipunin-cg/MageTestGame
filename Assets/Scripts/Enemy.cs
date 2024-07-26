@@ -47,6 +47,11 @@ namespace DefaultNamespace
             _rigidbody.rotation = Quaternion.Euler(_rotation);
             _rigidbody.velocity = _direction * _speed * Time.fixedDeltaTime;
         }
-        
+
+        private void OnParticleCollision(GameObject other)
+        {
+            Destroy(gameObject);
+            Debug.Log("particleCOlidded");
+        }
     }
 }

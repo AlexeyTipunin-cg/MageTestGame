@@ -4,27 +4,42 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private float _spawnRadius = 10;
+    [SerializeField] private int _enemyMaxCount = 10;
     [SerializeField] private Enemy _enemy;
 
     private CharacterController _character;
+    private int _enemyCounter;
     private void Awake()
     {
         _character = FindObjectOfType<CharacterController>();
-        Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(_ => SpawnEnemy()).AddTo(this);
+        Observable.Interval(TimeSpan.FromSeconds(2)).Where(_ => _enemyCounter < _enemyMaxCount)
+            .Subscribe(_ => SpawnEnemy()).AddTo(this);
     }
 
     private void SpawnEnemy()
     {
-        Enemy enemy = Instantiate(_enemy, Position(), Quaternion.identity);
+        Enemy enemy = Instantiate(_enemy, SpawnPosition(), Quaternion.identity);
         enemy.Init(_character);
+        enemy.OnDestroyAsObservable().Subscribe(_ => OnEnemyDestroy()).AddTo(this);
+        
+        _enemyCounter++;
     }
 
-    private Vector3 Position()
+    private void OnEnemyDestroy()
+    {
+        _enemyCounter--;
+        _enemyCounter = Math.Max(_enemyCounter, 0);
+    }
+    
+    
+
+    private Vector3 SpawnPosition()
     {
         Vector3 randomPoint = RandomPointOnCircleEdge(_spawnRadius);
         return randomPoint;
