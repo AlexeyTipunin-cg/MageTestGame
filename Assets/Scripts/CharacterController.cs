@@ -19,6 +19,8 @@ public class CharacterController : MonoBehaviour
     private Vector3 _rotationDirection;
     private Vector3 _cameraCharacterDelta;
 
+    private bool _tochWall;
+
     private void Awake()
     {
         _cameraCharacterDelta = gameObject.transform.position + _camera.transform.position;
@@ -43,17 +45,57 @@ public class CharacterController : MonoBehaviour
        //  Quaternion.
        // var rotation = Quaternion.RotateTowards(_rigidbody.rotation,
        //      Quaternion.Euler(Vector3.up * _rotationDirection.x * _rotationSpeed * Time.fixedDeltaTime), 360);
-       
 
-       var rotation = _rigidbody.rotation *
-                      Quaternion.Euler(Vector3.up * _rotationDirection.x * _rotationSpeed * Time.fixedDeltaTime);
-       _rigidbody.MoveRotation(rotation);
-       _rigidbody.MovePosition(_rigidbody.position + rotation * _moveDirection * (_speed * Time.fixedDeltaTime));
+
+       var rotation = _rigidbody.rotation;
+       if (!Mathf.Approximately(_rotationDirection.x, 0))
+       {
+           int direction = _rotationDirection.x > 0 ? 1 : -1;
+
+           rotation *= Quaternion.Euler(Vector3.up * direction * _rotationSpeed * Time.fixedDeltaTime);
+           _rigidbody.MoveRotation(rotation);
+       }
        
-       // _rigidbody.velocity = 
+       bool wall = Physics.Raycast(transform.position + Vector3.up * 0.5f  , transform.forward, out RaycastHit hit, 1, 1 << (int)GameLayers.Walls);
+
+       if (!wall)
+       {
+           _rigidbody.MovePosition(_rigidbody.position + rotation * _moveDirection * (_speed * Time.fixedDeltaTime));
+       }
+       
+       // _rigidbody.velocity = w
        
             
         // Debug.Log("Character velocity" + _rigidbody.velocity);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position + Vector3.up * 0.5f, transform.forward * 2 );
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == (int)GameLayers.Walls)
+        {
+            _tochWall = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == (int)GameLayers.Walls)
+        {
+            _tochWall = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.layer == (int)GameLayers.Walls)
+        {
+            _tochWall = false;
+        }
     }
 
     private void LateUpdate()

@@ -17,17 +17,17 @@ namespace DefaultNamespace
         public void Init(CharacterController characterController)
         {
             _character = characterController;
-            this.OnCollisionEnterAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_=>
-            {
-                _collided = true;
-                _rigidbody.velocity = Vector3.zero;
-                _rigidbody.isKinematic = true;
-            }).AddTo(this);
-            this.OnCollisionExitAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_ =>
-            {
-                _collided = false;
-                _rigidbody.isKinematic = false;
-            }).AddTo(this);
+            // this.OnCollisionEnterAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_=>
+            // {
+            //     _collided = true;
+            //     _rigidbody.velocity = Vector3.zero;
+            //     _rigidbody.isKinematic = true;
+            // }).AddTo(this);
+            // this.OnCollisionExitAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_ =>
+            // {
+            //     _collided = false;
+            //     _rigidbody.isKinematic = false;
+            // }).AddTo(this);
 
         }
         
