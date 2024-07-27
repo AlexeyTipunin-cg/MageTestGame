@@ -25,7 +25,8 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         Enemy enemy = Instantiate(_enemy, SpawnPosition(), Quaternion.identity);
-        enemy.Init(_character);
+        EnemyModel model = new EnemyModel(100);
+        enemy.Init(_character, model, _character.PlayerModel);
         enemy.OnDestroyAsObservable().Subscribe(_ => OnEnemyDestroy()).AddTo(this);
         
         _enemyCounter++;

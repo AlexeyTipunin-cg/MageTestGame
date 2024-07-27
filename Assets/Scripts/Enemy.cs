@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 using UniRx.Triggers;
+using Unity.VisualScripting;
+
 namespace DefaultNamespace
 {
     public class Enemy : MonoBehaviour
@@ -9,26 +12,43 @@ namespace DefaultNamespace
         private CharacterController _character;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed;
+        [SerializeField] private int _protection;
+
+        [SerializeField] private HealthBar _healthBar;
 
         private Vector3 _rotation;
         private Vector3 _direction;
-        private bool _collided;
+        private bool _collidedWithPlayer;
+        private EnemyModel _model;
+        private PlayerModel _playerModel;
 
-        public void Init(CharacterController characterController)
+        public void Init(CharacterController characterController, EnemyModel model, PlayerModel playerModel)
         {
+            _model = model;
+            _playerModel = playerModel;
             _character = characterController;
-            // this.OnCollisionEnterAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_=>
-            // {
-            //     _collided = true;
-            //     _rigidbody.velocity = Vector3.zero;
-            //     _rigidbody.isKinematic = true;
-            // }).AddTo(this);
-            // this.OnCollisionExitAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_ =>
-            // {
-            //     _collided = false;
-            //     _rigidbody.isKinematic = false;
-            // }).AddTo(this);
+            
+            _healthBar.SetProgress(_model.health.Value, _model.MaxHealth );
+            this.OnCollisionEnterAsObservable().Where(c => c.gameObject.layer == (int)GameLayers.Player).Subscribe(_=>
+            {
+                _collidedWithPlayer = true;
+                StartCoroutine(DamagePlayer());
+            }).AddTo(this);
+            this.OnCollisionExitAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_ =>
+            {
+                _collidedWithPlayer = false;
+                StopAllCoroutines();
+            }).AddTo(this);
 
+        }
+
+        private IEnumerator DamagePlayer()
+        {
+            while (_collidedWithPlayer)
+            {
+                _playerModel.health.Value -= 5;
+                yield return new WaitForSeconds(1);
+            }
         }
         
         private void Update()
@@ -40,7 +60,7 @@ namespace DefaultNamespace
 
         private void FixedUpdate()
         {
-            if (_collided)
+            if (_collidedWithPlayer)
             {
                 return;
             }
@@ -50,8 +70,17 @@ namespace DefaultNamespace
 
         private void OnParticleCollision(GameObject other)
         {
-            Destroy(gameObject);
-            Debug.Log("particleCOlidded");
+            DamageComponent damage = other.GetComponent<DamageComponent>();
+            if (damage != null)
+            {
+                _model.health.Value -= damage.GetDamage() * 1;
+                _healthBar.SetProgress(_model.health.Value, _model.MaxHealth );
+                if (_model.IsDead())
+                {
+                    Destroy(gameObject);
+                }
+            }
+
         }
     }
 }

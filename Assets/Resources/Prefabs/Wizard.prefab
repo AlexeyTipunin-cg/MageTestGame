@@ -5024,8 +5024,7 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _rigidbody: {fileID: 8363186800333514552}
   _attackController: {fileID: 6112471718563079255}
-  _speed: 10
-  _rotationSpeed: 1200
+  _wizardConfig: {fileID: 11400000, guid: 234a92604433e264ea7af0f16f895a95, type: 2}
 --- !u!114 &6112471718563079255
 MonoBehaviour:
   m_ObjectHideFlags: 0
