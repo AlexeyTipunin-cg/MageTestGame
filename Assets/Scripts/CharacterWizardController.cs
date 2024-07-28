@@ -5,15 +5,17 @@ using System.Numerics;
 using DefaultNamespace;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public class CharacterController : MonoBehaviour
+public class CharacterWizardController : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private AttackController _attackController;
     [SerializeField] private WizardConfig _wizardConfig;
+    
+    private Camera _camera;
     
     private Vector3 _moveDirection;
     private Vector3 _rotationDirection;
@@ -25,6 +27,13 @@ public class CharacterController : MonoBehaviour
 
     private void Awake()
     {
+
+    }
+
+    [Inject]
+    private void Init(Camera cameraInjected)
+    {
+        _camera = cameraInjected;
         PlayerModel = new PlayerModel(100);
         _cameraCharacterDelta = gameObject.transform.position + _camera.transform.position;
     }

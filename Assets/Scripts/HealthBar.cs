@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UniRx;
+using Zenject;
 
 namespace DefaultNamespace
 {
@@ -8,9 +9,9 @@ namespace DefaultNamespace
     {
         [SerializeField] private Transform _health;
         private Camera _camera;
-        private void Awake()
+        public void Init(Camera cameraInject)
         {
-            _camera = FindObjectOfType<Camera>();
+            _camera = cameraInject;
         }
 
         public void SetProgress(float currentVal, float maxVal)

@@ -9,7 +9,7 @@ namespace DefaultNamespace
 {
     public class Enemy : MonoBehaviour
     {
-        private CharacterController _character;
+        private CharacterWizardController _character;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed;
         [SerializeField] private int _protection;
@@ -22,12 +22,13 @@ namespace DefaultNamespace
         private EnemyModel _model;
         private PlayerModel _playerModel;
 
-        public void Init(CharacterController characterController, EnemyModel model, PlayerModel playerModel)
+        public void Init(CharacterWizardController characterController, EnemyModel model, PlayerModel playerModel)
         {
             _model = model;
             _playerModel = playerModel;
             _character = characterController;
             
+            _healthBar.Init(Camera.main);
             _healthBar.SetProgress(_model.health.Value, _model.MaxHealth );
             this.OnCollisionEnterAsObservable().Where(c => c.gameObject.layer == (int)GameLayers.Player).Subscribe(_=>
             {

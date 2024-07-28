@@ -2,32 +2,43 @@ using System;
 using UnityEngine;
 using TMPro;
 using UniRx;
+using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace DefaultNamespace
 {
     public class HUDController : MonoBehaviour
     {
         [SerializeField] private Transform _playerHealthProgressBar;
-        [SerializeField] private TMP_Text _endGameText;
+        [SerializeField] private EndGameScreen _endScreen;
 
         private float _maxHealth;
 
-        private void Start()
+        [Inject]
+        private void Init(CharacterWizardController characterWizard)
         {
-            var character = FindObjectOfType<CharacterController>();
-            _maxHealth = character.PlayerModel.MaxHealth;
+            _maxHealth = characterWizard.PlayerModel.MaxHealth;
 
-            SetProgressBar(character.PlayerModel.health.Value);
+            SetProgressBar(characterWizard.PlayerModel.health.Value);
 
-            character.PlayerModel.health.Subscribe(SetProgressBar).AddTo(this);
+            characterWizard.PlayerModel.health.Subscribe(SetProgressBar).AddTo(this);
 
-            character.PlayerModel.isDead.Subscribe(isDead =>
+            _endScreen.restartButton.onClick.AddListener(RestartScene);
+
+
+            characterWizard.PlayerModel.isDead.Subscribe(isDead =>
             {
                 if (isDead)
                 {
-                    _endGameText.gameObject.SetActive(true);
+                    _endScreen.gameObject.SetActive(true);
                 }
             });
+        }
+
+        private void RestartScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _endScreen.gameObject.SetActive(false);
         }
 
         private void SetProgressBar(float health)

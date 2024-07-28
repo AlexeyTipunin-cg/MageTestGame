@@ -5,6 +5,7 @@ using DefaultNamespace;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
@@ -13,11 +14,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int _enemyMaxCount = 10;
     [SerializeField] private Enemy _enemy;
 
-    private CharacterController _character;
+    private CharacterWizardController _characterWizard;
     private int _enemyCounter;
-    private void Awake()
+
+    [Inject]
+    private void Init(CharacterWizardController characterWizardController)
     {
-        _character = FindObjectOfType<CharacterController>();
+        _characterWizard = characterWizardController;
+        
         Observable.Interval(TimeSpan.FromSeconds(2)).Where(_ => _enemyCounter < _enemyMaxCount)
             .Subscribe(_ => SpawnEnemy()).AddTo(this);
     }
@@ -26,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     {
         Enemy enemy = Instantiate(_enemy, SpawnPosition(), Quaternion.identity);
         EnemyModel model = new EnemyModel(100);
-        enemy.Init(_character, model, _character.PlayerModel);
+        enemy.Init(_characterWizard, model, _characterWizard.PlayerModel);
         enemy.OnDestroyAsObservable().Subscribe(_ => OnEnemyDestroy()).AddTo(this);
         
         _enemyCounter++;
