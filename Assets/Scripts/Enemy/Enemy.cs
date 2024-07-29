@@ -1,28 +1,26 @@
-using System;
 using System.Collections;
+using DefaultNamespace;
 using UniRx;
-using UnityEngine;
 using UniRx.Triggers;
-using Unity.VisualScripting;
+using UnityEngine;
 
-namespace DefaultNamespace
+namespace Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        private CharacterWizardController _character;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed;
         [SerializeField] private int _protection;
-
         [SerializeField] private HealthBar _healthBar;
 
+        private IPlayerInput _character;
         private Vector3 _rotation;
         private Vector3 _direction;
         private bool _collidedWithPlayer;
         private EnemyModel _model;
         private PlayerModel _playerModel;
 
-        public void Init(CharacterWizardController characterController, EnemyModel model, PlayerModel playerModel)
+        public void Init(IPlayerInput characterController, EnemyModel model, PlayerModel playerModel)
         {
             _model = model;
             _playerModel = playerModel;
@@ -54,7 +52,7 @@ namespace DefaultNamespace
         
         private void Update()
         {
-            Vector3 targetPosition = _character.transform.position;
+            Vector3 targetPosition = _character.GetPosition();
             _direction = targetPosition - transform.position;
             _rotation = Vector3.RotateTowards(transform.forward, _direction, 1000, 1000);
         }

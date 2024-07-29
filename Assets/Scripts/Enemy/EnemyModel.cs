@@ -1,6 +1,6 @@
 using UniRx;
 
-namespace DefaultNamespace
+namespace Enemy
 {
     public class EnemyModel
     {

@@ -1,4 +1,6 @@
 using System;
+using DefaultNamespace.UI;
+using Skills;
 using UnityEngine;
 using TMPro;
 using UniRx;
@@ -11,28 +13,34 @@ namespace DefaultNamespace
     {
         [SerializeField] private Transform _playerHealthProgressBar;
         [SerializeField] private EndGameScreen _endScreen;
+        [SerializeField] private SkillIcon[] _skillIcons;
 
         private float _maxHealth;
 
         [Inject]
-        private void Init(CharacterWizardController characterWizard)
+        private void Init(PlayerModel playerModel, SkillController skillController)
         {
-            _maxHealth = characterWizard.PlayerModel.MaxHealth;
+            _maxHealth = playerModel.MaxHealth;
 
-            SetProgressBar(characterWizard.PlayerModel.health.Value);
+            SetProgressBar(playerModel.health.Value);
 
-            characterWizard.PlayerModel.health.Subscribe(SetProgressBar).AddTo(this);
+            playerModel.health.Subscribe(SetProgressBar).AddTo(this);
 
             _endScreen.restartButton.onClick.AddListener(RestartScene);
 
 
-            characterWizard.PlayerModel.isDead.Subscribe(isDead =>
+            playerModel.isDead.Subscribe(isDead =>
             {
                 if (isDead)
                 {
                     _endScreen.gameObject.SetActive(true);
                 }
             });
+
+            for (int i = 0; i < skillController.GetSkillModels.Length; i++)
+            {
+                _skillIcons[i].Init(skillController.GetSkillModels[i], skillController._currentSkill);
+            }
         }
 
         private void RestartScene()

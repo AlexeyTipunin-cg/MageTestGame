@@ -1,53 +1,55 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using DefaultNamespace;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public class CharacterWizardController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour, IPlayerInput
 {
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private AttackController _attackController;
-    [SerializeField] private WizardConfig _wizardConfig;
     
+    private WizardConfig _wizardConfig;
     private Camera _camera;
-    
     private Vector3 _moveDirection;
     private Vector3 _rotationDirection;
     private Vector3 _cameraCharacterDelta;
-
-    private bool _tochWall;
-
-    public PlayerModel PlayerModel { get; set; }
-
-    private void Awake()
+    public event Action OnAttack;
+    public event Action OnNextSkill;
+    public event Action OnPreviousSkill;
+    public Vector3 GetPosition()
     {
-
+        return transform.position;
     }
 
+
     [Inject]
-    private void Init(Camera cameraInjected)
+    private void Init(Camera cameraInjected, WizardConfig wizardConfig)
     {
         _camera = cameraInjected;
-        PlayerModel = new PlayerModel(100);
         _cameraCharacterDelta = gameObject.transform.position + _camera.transform.position;
+        _wizardConfig = wizardConfig;
     }
 
     private void Update()
     {
         _moveDirection = Vector3.forward * Input.GetAxis("Vertical");
         _rotationDirection = Vector3.right * Input.GetAxis("Horizontal");
-
+        
         if (Input.GetKeyDown(KeyCode.X))
         {
-            _attackController.Attack();
+            OnAttack?.Invoke();
         }
-        // Debug.Log("_moveDirection" + _moveDirection);
+        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            OnPreviousSkill?.Invoke();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            OnNextSkill?.Invoke();
+        }
     }
 
     private void FixedUpdate()
@@ -69,11 +71,6 @@ public class CharacterWizardController : MonoBehaviour
             _rigidbody.MovePosition(_rigidbody.position +
                                     rotation * _moveDirection * (_wizardConfig.movementSpeed * Time.fixedDeltaTime));
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(transform.position + Vector3.up * 0.5f, transform.forward * 2);
     }
 
     private void LateUpdate()

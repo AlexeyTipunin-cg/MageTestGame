@@ -9,10 +9,10 @@ namespace DefaultNamespace
         public IReadOnlyReactiveProperty<bool> isDead;
         public int MaxHealth { get; }
 
-        public PlayerModel(int startHealth)
+        public PlayerModel(WizardConfig config)
         {
-            MaxHealth = startHealth;
-            health = new ReactiveProperty<float>(startHealth);
+            MaxHealth = config.health;
+            health = new ReactiveProperty<float>(config.health);
             isDead = health.Select(x => x <= 0).ToReactiveProperty();
         }
     }
