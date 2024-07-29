@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 649594516}
   - component: {fileID: 649594519}
   m_Layer: 10
-  m_Name: Cube (3)
+  m_Name: Wall_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -853,7 +853,7 @@ GameObject:
   - component: {fileID: 1053900616}
   - component: {fileID: 1053900619}
   m_Layer: 10
-  m_Name: Cube
+  m_Name: Wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1255,7 +1255,7 @@ GameObject:
   - component: {fileID: 1205777175}
   - component: {fileID: 1205777178}
   m_Layer: 10
-  m_Name: Cube (2)
+  m_Name: Wall_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1722,7 +1722,7 @@ GameObject:
   - component: {fileID: 1679240093}
   - component: {fileID: 1679240096}
   m_Layer: 10
-  m_Name: Cube (1)
+  m_Name: Wall_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1737,7 +1737,7 @@ Transform:
   m_GameObject: {fileID: 1679240091}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5673332, y: 0.9073725, z: -8.634731}
+  m_LocalPosition: {x: 12.5, y: 0.9073725, z: -27.36}
   m_LocalScale: {x: 18.65, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
