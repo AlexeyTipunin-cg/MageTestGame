@@ -13,7 +13,7 @@ namespace Skills
 
         public float CoolDownTime => _skill.cooldownTimeSec;
         
-        private Skill _skill;
+        public Skill _skill;
         
         public SkillModel(Skill skill)
         {

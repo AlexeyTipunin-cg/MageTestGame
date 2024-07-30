@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
 
-namespace DefaultNamespace
+namespace Assets.Scripts.Player
 {
     public class PlayerModel
     {
@@ -14,6 +14,11 @@ namespace DefaultNamespace
             MaxHealth = config.health;
             health = new ReactiveProperty<float>(config.health);
             isDead = health.Select(x => x <= 0).ToReactiveProperty();
+        }
+
+        public void SetHealth(float addHealth)
+        {
+            health.Value = Mathf.Min(health.Value + addHealth, MaxHealth);
         }
     }
 }

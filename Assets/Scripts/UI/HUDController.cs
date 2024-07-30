@@ -6,6 +6,7 @@ using TMPro;
 using UniRx;
 using UnityEngine.SceneManagement;
 using Zenject;
+using Assets.Scripts.Player;
 
 namespace DefaultNamespace
 {

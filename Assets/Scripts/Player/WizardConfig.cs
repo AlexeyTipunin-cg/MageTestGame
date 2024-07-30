@@ -1,7 +1,7 @@
 using Skills;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Assets.Scripts.Player
 {
     [CreateAssetMenu(fileName = "WizardConfig", menuName = "GameConfigs/GameCharacters/Wizard", order = 0)]
     public class WizardConfig : ScriptableObject

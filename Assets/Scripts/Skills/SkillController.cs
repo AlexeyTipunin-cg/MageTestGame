@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace;
+using Assets.Scripts.Player;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -13,15 +13,15 @@ namespace Skills
     {
         [SerializeField] private PlayerInputController _playerInput;
         [SerializeField] private SkillView[] _skillViews;
-        
+
         private SkillModel[] _skills;
         public ReactiveProperty<SkillModel> _currentSkill = new ReactiveProperty<SkillModel>();
         private int _currentSkillIndex;
-        
+
         public SkillModel[] GetSkillModels => _skills;
 
         [Inject]
-        private void Init(WizardConfig wizardConfig)
+        private void Init(WizardConfig wizardConfig, PlayerModel playerModel)
         {
             _skills = new SkillModel[wizardConfig.Skills.Length];
 
@@ -29,10 +29,11 @@ namespace Skills
             {
                 SkillModel model = new SkillModel(wizardConfig.Skills[i]);
                 _skills[i] = model;
-                
+
                 SkillView prefab = _skillViews.First(view => view.GetSkillType == wizardConfig.Skills[i].skillType);
                 SkillView skillView = Instantiate(prefab, gameObject.transform);
-                skillView.Init(model);
+                skillView.Init(playerModel, model);
+
             }
 
             _playerInput.OnAttack += Attack;
@@ -80,7 +81,7 @@ namespace Skills
             {
                 _currentSkillIndex = 0;
             }
-            
+
             _currentSkill.Value = _skills[_currentSkillIndex];
         }
 
@@ -94,7 +95,7 @@ namespace Skills
             {
                 _currentSkillIndex = _skills.Length - 1;
             }
-            
+
             _currentSkill.Value = _skills[_currentSkillIndex];
         }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001180b218434b4ba7b41c07bd55b333, type: 3}
   m_Name: SkillAOE
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 100
   cooldownTimeSec: 10
   radius: 5
   skillType: 1

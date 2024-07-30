@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3351351215822795663}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5152833513532895742}
   - component: {fileID: 4284268942509838504}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,8 @@ GameObject:
   - component: {fileID: 7915790406278588530}
   - component: {fileID: 8648944953100469363}
   - component: {fileID: 7124254270069683730}
-  m_Layer: 0
+  - component: {fileID: 177680018344966572}
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,6 +244,7 @@ MonoBehaviour:
   _speed: 50
   _protection: 0
   _healthBar: {fileID: 5174273746724079560}
+  _damageable: {fileID: 177680018344966572}
 --- !u!54 &7124254270069683730
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -270,6 +272,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &177680018344966572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444806145942780475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2524c0d01d1243ebb5bfffba5a3c4880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5496217682674948482
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9054536555749842317}
   - component: {fileID: 4367693006436459581}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2275859677755944512}
   - component: {fileID: 5174273746724079560}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
