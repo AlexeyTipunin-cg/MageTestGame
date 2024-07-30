@@ -400,7 +400,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -795,6 +795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 679365708}
+  - component: {fileID: 679365709}
   m_Layer: 10
   m_Name: Level
   m_TagString: Untagged
@@ -825,6 +826,19 @@ Transform:
   - {fileID: 1435852715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &679365709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679365707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fb3fcafa89e57468c87c07bdc57e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneRadius: 43.9
 --- !u!1 &746199214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,10 +1780,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfedaf53547740ee985538ed928e0317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 4556730939289265227, guid: a00de2b9367493844b54dc05f97b17a4, type: 3}
+  _player: {fileID: 827102571001578353, guid: a00de2b9367493844b54dc05f97b17a4, type: 3}
   _camera: {fileID: 330585545}
   _playerSpawn: {fileID: 1221265649}
   _wizardConfig: {fileID: 11400000, guid: 234a92604433e264ea7af0f16f895a95, type: 2}
+  _sceneController: {fileID: 679365709}
 --- !u!4 &1170839518
 Transform:
   m_ObjectHideFlags: 0
@@ -2939,7 +2954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63020e46f5264a42b5819a5e887889e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnRadius: 10
   _enemyMaxCount: 10
   _enemy: {fileID: 8648944953100469363, guid: 9abca1e892bbf3145b7b0e538b077ede, type: 3}
 --- !u!4 &1941966619

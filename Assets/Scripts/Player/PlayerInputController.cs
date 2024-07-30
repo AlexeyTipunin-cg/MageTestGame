@@ -7,10 +7,10 @@ using Zenject;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlayerInputController : MonoBehaviour, IPlayerInput, IGetPosition
+public class PlayerInputController : MonoBehaviour, IPlayerInput
 {
     [SerializeField] private Rigidbody _rigidbody;
-    
+
     private WizardConfig _wizardConfig;
     private Camera _camera;
     private Vector3 _moveDirection;
@@ -21,11 +21,6 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput, IGetPosition
     public event Action OnPreviousSkill;
 
     private ISceneLimits _sceneLimits;
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
 
     [Inject]
     private void Init(Camera cameraInjected, WizardConfig wizardConfig, ISceneLimits sceneLimits)
@@ -41,17 +36,17 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput, IGetPosition
         _moveDirection = Vector3.forward * Input.GetAxis("Vertical");
         _rotationDirection = Vector3.right * Input.GetAxis("Horizontal");
 
-        
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             OnAttack?.Invoke();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             OnPreviousSkill?.Invoke();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             OnNextSkill?.Invoke();
@@ -73,12 +68,15 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput, IGetPosition
         bool wall = Physics.Raycast(position + Vector3.up * 0.5f, rotation * _moveDirection,
             out RaycastHit hit, 1.5f, 1 << (int)GameLayers.Walls);
 
-        bool insideScene = _sceneLimits.isInsideScene(position);
 
-        if (!wall && insideScene)
+        Vector3 newPosition = position + rotation * _moveDirection * (_wizardConfig.movementSpeed * Time.fixedDeltaTime);
+        bool insideScene = _sceneLimits.isInsideScene(newPosition);
+        if (insideScene)
         {
-            _rigidbody.MovePosition(position +
-                                    rotation * _moveDirection * (_wizardConfig.movementSpeed * Time.fixedDeltaTime));
+            if (!wall)
+            {
+                _rigidbody.MovePosition(newPosition);
+            }
         }
     }
 

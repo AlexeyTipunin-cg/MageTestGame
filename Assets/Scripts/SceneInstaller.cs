@@ -25,7 +25,7 @@ public class SceneInstaller : MonoInstaller
             _playerSpawn.position, Quaternion.identity,
             null);
         Container.Bind<IPlayerInput>().To<PlayerInputController>().FromInstance(player).AsSingle();
-        Container.Bind<IGetPosition>().To<PlayerPosition>().FromInstance(player.GetComponent<PlayerPosition>()).AsSingle();
+        Container.Bind<IGetPosition>().To<PlayerPosition>().FromComponentOn(player.gameObject).AsSingle();
         Container.Bind<SkillController>().FromComponentOn(player.gameObject).AsSingle();
         // Container.BindInterfacesAndSelfTo<PlayerInputController>().FromInstance(player).AsSingle();
 
