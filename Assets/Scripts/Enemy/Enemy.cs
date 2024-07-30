@@ -12,8 +12,6 @@ namespace Enemy
     {
         [SerializeField] private EnemyTypes _enemyType;
         [SerializeField] private Rigidbody _rigidbody;
-        [SerializeField] private float _speed;
-        [SerializeField] private int _protection;
         [SerializeField] private HealthBar _healthBar;
         [SerializeField] private Damageable _damageable;
 
@@ -25,6 +23,7 @@ namespace Enemy
         private bool _collidedWithPlayer;
         private EnemyModel _model;
         private PlayerModel _playerModel;
+        private bool _isGameOver;
 
         public EnemyTypes EnemyType => _enemyType;
 
@@ -36,6 +35,17 @@ namespace Enemy
             _playerModel = playerModel;
             _playerPosition = playerPosition;
             _collidedWithPlayer = false;
+
+            _playerModel.isDead.Subscribe(isDead =>
+            {
+
+                if (isDead)
+                {
+                    _isGameOver = isDead;
+                    _rigidbody.isKinematic = true;
+                }
+
+            }).AddTo(disposable);
 
             _healthBar.Init(Camera.main);
             _healthBar.SetProgress(_model.health.Value, _model.MaxHealth);
@@ -65,13 +75,23 @@ namespace Enemy
         {
             while (_collidedWithPlayer)
             {
-                _playerModel.SetHealth(-5);
-                yield return new WaitForSeconds(1);
+                if (_isGameOver)
+                {
+                    break;
+                }
+
+                _playerModel.AddDamage(_model.Config.damage);
+                yield return new WaitForSeconds(_model.Config.damageInterval);
             }
         }
 
         private void Update()
         {
+            if (_isGameOver)
+            {
+                return;
+            }
+
             Vector3 targetPosition = _playerPosition.GetPosition();
             _direction = targetPosition - transform.position;
             _rotation = Vector3.RotateTowards(transform.forward, _direction, 1000, 1000);
@@ -79,12 +99,17 @@ namespace Enemy
 
         private void FixedUpdate()
         {
+            if (_isGameOver)
+            {
+                return;
+            }
+
             if (_collidedWithPlayer)
             {
                 return;
             }
-            _rigidbody.rotation = Quaternion.Euler(new Vector3(0, _rotation.y, 0));
-            _rigidbody.velocity = _direction * _speed * Time.fixedDeltaTime;
+            _rigidbody.rotation = Quaternion.Euler(new Vector3(0, _model.Config.rotationSpeed, 0));
+            _rigidbody.velocity = _direction * _model.Config.movementSpeed * Time.fixedDeltaTime;
         }
 
         private void OnDestroy()

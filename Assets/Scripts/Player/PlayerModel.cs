@@ -20,5 +20,10 @@ namespace Assets.Scripts.Player
         {
             health.Value = Mathf.Min(health.Value + addHealth, MaxHealth);
         }
+
+        public void AddDamage(float damage)
+        {
+            health.Value = Mathf.Max(health.Value - damage, 0);
+        }
     }
 }

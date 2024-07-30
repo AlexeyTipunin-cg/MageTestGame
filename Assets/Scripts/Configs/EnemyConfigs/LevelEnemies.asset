@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001180b218434b4ba7b41c07bd55b333, type: 3}
-  m_Name: SkillStrike
+  m_Script: {fileID: 11500000, guid: 92311b569707f46419bf83d000e0e830, type: 3}
+  m_Name: LevelEnemies
   m_EditorClassIdentifier: 
-  damage: 50
-  cooldownTimeSec: 0.3
-  radius: 0
-  skillType: 0
-  skillIconColor: {r: 0, g: 0, b: 0, a: 0}
+  enemies:
+  - {fileID: 11400000, guid: 5adf6793f66a05d4086be3835f68e100, type: 2}
+  - {fileID: 11400000, guid: 067b3888761203b41bafe1a5d750b4f4, type: 2}

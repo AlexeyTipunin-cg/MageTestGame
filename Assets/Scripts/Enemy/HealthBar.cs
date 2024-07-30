@@ -23,7 +23,9 @@ namespace DefaultNamespace
 
         private void LateUpdate()
         {
-            transform.LookAt(_camera.transform.position);
+            //transform.LookAt(_camera.transform.position);
+            transform.LookAt(transform.position + _camera.transform.rotation * Vector3.back, _camera.transform.rotation * Vector3.down);
+
         }
     }
 }

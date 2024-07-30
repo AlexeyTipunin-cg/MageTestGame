@@ -1,3 +1,4 @@
+using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
 using Assets.Scripts.Scene;
 using Skills;
@@ -11,12 +12,15 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private Transform _playerSpawn;
     [SerializeField] private CreatureConfig _wizardConfig;
     [SerializeField] private SceneController _sceneController;
+    [SerializeField] private LevelEnemies _levelEnemies;
     public override void InstallBindings()
     {
         Debug.Log("Mono Installler");
         // Container.Bind<IAttack>().FromComponentInNewPrefab(_player);
         Container.Bind<Camera>().FromInstance(_camera).AsSingle();
         Container.Bind<CreatureConfig>().FromInstance(_wizardConfig).AsSingle();
+        Container.Bind<LevelEnemies>().FromInstance(_levelEnemies).AsSingle();
+
         Container.Bind<PlayerModel>().AsSingle();
 
         Container.Bind<ISceneLimits>().To<SceneController>().FromInstance(_sceneController).AsSingle();

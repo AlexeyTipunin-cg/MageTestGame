@@ -242,7 +242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyType: 0
   _rigidbody: {fileID: 7124254270069683730}
-  _speed: 50
   _protection: 0
   _healthBar: {fileID: 5174273746724079560}
   _damageable: {fileID: 177680018344966572}

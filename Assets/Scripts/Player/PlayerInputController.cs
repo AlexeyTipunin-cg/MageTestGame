@@ -6,6 +6,7 @@ using UnityEngine;
 using Zenject;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
+using UniRx;
 
 public class PlayerInputController : MonoBehaviour, IPlayerInput
 {
@@ -21,18 +22,25 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
     public event Action OnPreviousSkill;
 
     private ISceneLimits _sceneLimits;
+    private bool _isGameOver;
 
     [Inject]
-    private void Init(Camera cameraInjected, CreatureConfig wizardConfig, ISceneLimits sceneLimits)
+    private void Init(Camera cameraInjected, CreatureConfig wizardConfig, ISceneLimits sceneLimits, PlayerModel playerModel)
     {
         _camera = cameraInjected;
         _cameraCharacterDelta = gameObject.transform.position + _camera.transform.position;
         _wizardConfig = wizardConfig;
         _sceneLimits = sceneLimits;
+        playerModel.isDead.Subscribe(isDead =>
+        {
+            _isGameOver = isDead;
+        });
     }
 
     private void Update()
     {
+        if (_isGameOver) { return; }
+
         _moveDirection = Vector3.forward * Input.GetAxis("Vertical");
         _rotationDirection = Vector3.right * Input.GetAxis("Horizontal");
 
@@ -55,6 +63,9 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
 
     private void FixedUpdate()
     {
+        if (_isGameOver) { return; }
+
+
         Quaternion rotation = _rigidbody.rotation;
         if (!Mathf.Approximately(_rotationDirection.x, 0))
         {
@@ -82,6 +93,8 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
 
     private void LateUpdate()
     {
+        if (_isGameOver) { return; }
+
         var transform1 = _camera.transform;
         var position = _rigidbody.position;
         var pos = new Vector3(position.x + _cameraCharacterDelta.x, transform1.position.y,

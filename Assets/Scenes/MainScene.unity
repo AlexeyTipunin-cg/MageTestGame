@@ -1790,6 +1790,7 @@ MonoBehaviour:
   _playerSpawn: {fileID: 1221265649}
   _wizardConfig: {fileID: 11400000, guid: 234a92604433e264ea7af0f16f895a95, type: 2}
   _sceneController: {fileID: 679365709}
+  _levelEnemies: {fileID: 11400000, guid: 00eabb599dd8fc349ad6d72d82c1b1a2, type: 2}
 --- !u!4 &1170839518
 Transform:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
 using Assets.Scripts.Scene;
 using UniRx;
@@ -22,6 +24,7 @@ namespace Enemy
         private ISceneLimits _sceneLimits;
         private int _enemyCounter;
         private ObjectPool<Enemy> _enemyPool;
+        private LevelEnemies _levelEnemies;
 
         private int _nextEnemy;
 
@@ -29,13 +32,13 @@ namespace Enemy
         //private List<Vector3> points = new List<Vector3>();
 
         [Inject]
-        private void Init( IGetPosition playerPos, ISceneLimits limits, PlayerModel playerModel)
+        private void Init(LevelEnemies enemies, IGetPosition getPosition, ISceneLimits limits, PlayerModel playerModel)
         {
             _playerModel = playerModel;
-            _getPosition = playerPos;
             _sceneLimits = limits;
+            _levelEnemies = enemies;
             _enemyPool = new ObjectPool<Enemy>(CreateEnemy, OnGetFromPool, OnRelease, OnDestroyEnemy);
-
+            _getPosition = getPosition;
             Observable.EveryUpdate().Where(_ => _enemyCounter < _enemyMaxCount)
                 .Subscribe(_ => SpawnEnemy()).AddTo(this);
         }
@@ -62,7 +65,7 @@ namespace Enemy
         {
             enemy.gameObject.SetActive(true);
 
-            EnemyModel model = new EnemyModel(100);
+            EnemyModel model = MakeModel(enemy);
             enemy.Init(_getPosition, model, _playerModel);
             model.isDead.Subscribe(isDead =>
             {
@@ -77,6 +80,13 @@ namespace Enemy
             enemy.transform.rotation = Quaternion.identity;
 
             _enemyCounter++;
+        }
+
+        private EnemyModel MakeModel(Enemy enemy)
+        {
+            EnemyConfig config = _levelEnemies.enemies.First(e => e.enemyType == enemy.EnemyType);
+            EnemyModel enemyModel = new EnemyModel(config.health, config);
+            return enemyModel;
         }
 
         private void OnRelease(Enemy enemy)

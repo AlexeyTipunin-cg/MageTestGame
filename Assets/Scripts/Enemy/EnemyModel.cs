@@ -1,3 +1,4 @@
+using Assets.Scripts.Enemy;
 using UniRx;
 
 namespace Enemy
@@ -7,9 +8,11 @@ namespace Enemy
         public ReactiveProperty<float> health;
         public IReadOnlyReactiveProperty<bool> isDead;
         public int MaxHealth { get; }
+        public EnemyConfig Config { get; }
 
-        public EnemyModel(int startHealth)
+        public EnemyModel(int startHealth, EnemyConfig config)
         {
+            Config = config;
             MaxHealth = startHealth;
             health = new ReactiveProperty<float>(startHealth);
             isDead = health.Select(h => IsDead()).ToReactiveProperty();
