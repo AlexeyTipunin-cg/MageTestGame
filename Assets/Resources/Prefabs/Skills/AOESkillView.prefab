@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5707184448526597268}
   - component: {fileID: 2273086772862133115}
   - component: {fileID: 3687571222154351777}
-  - component: {fileID: 249614279799788071}
   - component: {fileID: 112878793227529780}
   m_Layer: 6
   m_Name: AOESkillView
@@ -4890,18 +4889,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &249614279799788071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821972438943564696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7471f0abc48e4a70943aa319437cd95f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &112878793227529780
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6274661072385260050}
   - component: {fileID: 552901949430113789}
   - component: {fileID: 3101589783005598247}
-  - component: {fileID: 1968393930360083617}
   - component: {fileID: -5401426223212667001}
   m_Layer: 6
   m_Name: HealSkillView
@@ -4891,18 +4890,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1968393930360083617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5254610130676843806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7471f0abc48e4a70943aa319437cd95f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-5401426223212667001
 MonoBehaviour:
   m_ObjectHideFlags: 0
