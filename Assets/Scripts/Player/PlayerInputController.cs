@@ -11,7 +11,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
 {
     [SerializeField] private Rigidbody _rigidbody;
 
-    private WizardConfig _wizardConfig;
+    private CreatureConfig _wizardConfig;
     private Camera _camera;
     private Vector3 _moveDirection;
     private Vector3 _rotationDirection;
@@ -23,7 +23,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
     private ISceneLimits _sceneLimits;
 
     [Inject]
-    private void Init(Camera cameraInjected, WizardConfig wizardConfig, ISceneLimits sceneLimits)
+    private void Init(Camera cameraInjected, CreatureConfig wizardConfig, ISceneLimits sceneLimits)
     {
         _camera = cameraInjected;
         _cameraCharacterDelta = gameObject.transform.position + _camera.transform.position;

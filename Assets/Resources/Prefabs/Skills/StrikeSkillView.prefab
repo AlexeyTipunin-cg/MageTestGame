@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2664372127619350281}
   - component: {fileID: 8377150717762887910}
   - component: {fileID: 6406049605247227708}
-  - component: {fileID: 7433811048026920752}
+  - component: {fileID: -4324103075920194443}
+  - component: {fileID: -7582429716000328762}
   m_Layer: 6
   m_Name: StrikeSkillView
   m_TagString: Untagged
@@ -4890,7 +4891,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &7433811048026920752
+--- !u!114 &-4324103075920194443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4899,8 +4900,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4251947012593074181}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67f223c5df74ce9925bd356172dabbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 6497c361d3447ae4083e0446c0995afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7582429716000328762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251947012593074181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdb58cec23643c083567f2a01c9c8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _skillVFX: {fileID: 8377150717762887910}
   _skillType: 0
+  _damageComponent: {fileID: -4324103075920194443}

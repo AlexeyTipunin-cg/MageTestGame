@@ -9,14 +9,14 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private PlayerInputController _player;
     [SerializeField] private Camera _camera;
     [SerializeField] private Transform _playerSpawn;
-    [SerializeField] private WizardConfig _wizardConfig;
+    [SerializeField] private CreatureConfig _wizardConfig;
     [SerializeField] private SceneController _sceneController;
     public override void InstallBindings()
     {
         Debug.Log("Mono Installler");
         // Container.Bind<IAttack>().FromComponentInNewPrefab(_player);
         Container.Bind<Camera>().FromInstance(_camera).AsSingle();
-        Container.Bind<WizardConfig>().FromInstance(_wizardConfig).AsSingle();
+        Container.Bind<CreatureConfig>().FromInstance(_wizardConfig).AsSingle();
         Container.Bind<PlayerModel>().AsSingle();
 
         Container.Bind<ISceneLimits>().To<SceneController>().FromInstance(_sceneController).AsSingle();

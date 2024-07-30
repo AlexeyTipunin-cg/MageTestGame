@@ -217,6 +217,37 @@ MonoBehaviour:
   _fill: {fileID: 1844218763}
   _chooseBack: {fileID: 746199216}
   _cooldownText: {fileID: 1704126280}
+--- !u!1 &235041318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 235041319}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &235041319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235041318}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.097055, y: 1.5464287, z: 10.071931}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &298000307
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,8 +2933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63020e46f5264a42b5819a5e887889e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyMaxCount: 1
-  _enemy: {fileID: 8648944953100469363, guid: 9abca1e892bbf3145b7b0e538b077ede, type: 3}
+  _enemyMaxCount: 10
+  _enemies:
+  - {fileID: 8648944953100469363, guid: 9abca1e892bbf3145b7b0e538b077ede, type: 3}
+  - {fileID: 8648944953100469363, guid: 039967a337391c445861772836d37c76, type: 3}
 --- !u!4 &1941966619
 Transform:
   m_ObjectHideFlags: 0
@@ -3271,3 +3304,4 @@ SceneRoots:
   - {fileID: 679365708}
   - {fileID: 1189486357}
   - {fileID: 1217755791}
+  - {fileID: 235041319}

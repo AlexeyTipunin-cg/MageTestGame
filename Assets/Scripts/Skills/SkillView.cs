@@ -14,7 +14,7 @@ namespace Skills
         protected Skill _config;
         protected PlayerModel _playerModel;
 
-        public void Init(PlayerModel playerModel, SkillModel model)
+        public virtual void Init(PlayerModel playerModel, SkillModel model)
         {
             _config = model._skill;
             _playerModel = playerModel;

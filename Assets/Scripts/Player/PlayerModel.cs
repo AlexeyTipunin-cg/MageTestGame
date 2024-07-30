@@ -9,7 +9,7 @@ namespace Assets.Scripts.Player
         public IReadOnlyReactiveProperty<bool> isDead;
         public int MaxHealth { get; }
 
-        public PlayerModel(WizardConfig config)
+        public PlayerModel(CreatureConfig config)
         {
             MaxHealth = config.health;
             health = new ReactiveProperty<float>(config.health);

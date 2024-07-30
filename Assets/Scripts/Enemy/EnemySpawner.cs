@@ -15,13 +15,16 @@ namespace Enemy
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private int _enemyMaxCount = 10;
-        [SerializeField] private Enemy _enemy;
+        [SerializeField] private Enemy[] _enemies;
 
         private PlayerModel _playerModel;
         private IGetPosition _getPosition;
         private ISceneLimits _sceneLimits;
         private int _enemyCounter;
         private ObjectPool<Enemy> _enemyPool;
+
+        private int _nextEnemy;
+
 
         //private List<Vector3> points = new List<Vector3>();
 
@@ -33,7 +36,7 @@ namespace Enemy
             _sceneLimits = limits;
             _enemyPool = new ObjectPool<Enemy>(CreateEnemy, OnGetFromPool, OnRelease, OnDestroyEnemy);
 
-            Observable.Interval(TimeSpan.FromSeconds(2)).Where(_ => _enemyCounter < _enemyMaxCount)
+            Observable.EveryUpdate().Where(_ => _enemyCounter < _enemyMaxCount)
                 .Subscribe(_ => SpawnEnemy()).AddTo(this);
         }
 
@@ -44,7 +47,14 @@ namespace Enemy
 
         private Enemy CreateEnemy()
         {
-            Enemy enemy = Instantiate(_enemy);
+            if (_nextEnemy > _enemies.Length - 1)
+            {
+                _nextEnemy = 0;
+            }
+
+
+            Enemy enemy = Instantiate(_enemies[_nextEnemy]);
+            _nextEnemy++;
             return enemy;
         }
 

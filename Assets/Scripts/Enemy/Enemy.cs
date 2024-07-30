@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
 using DefaultNamespace;
 using UniRx;
@@ -9,6 +10,7 @@ namespace Enemy
 {
     public class Enemy : MonoBehaviour
     {
+        [SerializeField] private EnemyTypes _enemyType;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _speed;
         [SerializeField] private int _protection;
@@ -24,7 +26,9 @@ namespace Enemy
         private EnemyModel _model;
         private PlayerModel _playerModel;
 
-        public void Init( IGetPosition playerPosition, EnemyModel model, PlayerModel playerModel)
+        public EnemyTypes EnemyType => _enemyType;
+
+        public void Init(IGetPosition playerPosition, EnemyModel model, PlayerModel playerModel)
         {
             disposable = new CompositeDisposable();
 
@@ -79,7 +83,7 @@ namespace Enemy
             {
                 return;
             }
-            _rigidbody.rotation = Quaternion.Euler(_rotation);
+            _rigidbody.rotation = Quaternion.Euler(new Vector3(0, _rotation.y, 0));
             _rigidbody.velocity = _direction * _speed * Time.fixedDeltaTime;
         }
 

@@ -1,3 +1,4 @@
+using Assets.Scripts.Damage;
 using UnityEngine;
 
 namespace Enemy
@@ -13,6 +14,14 @@ namespace Enemy
         public void AddDamage(float damage)
         {
             _model.health.Value -= damage;
+        }
+
+        private void OnParticleCollision(GameObject other)
+        {
+            if (other.TryGetComponent(out DamageComponent damage))
+            {
+                _model.health.Value -= damage.GetDamage();
+            }
         }
     }
 }

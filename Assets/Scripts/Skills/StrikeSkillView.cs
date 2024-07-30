@@ -1,4 +1,6 @@
 using System;
+using Assets.Scripts.Damage;
+using Assets.Scripts.Player;
 using Enemy;
 using UnityEngine;
 
@@ -6,12 +8,12 @@ namespace Skills
 {
     public class StrikeSkillView : SkillView
     {
-        private void OnCollisionEnter(Collision other)
+        [SerializeField]private DamageComponent _damageComponent;
+
+        public override void Init(PlayerModel playerModel, SkillModel model)
         {
-            if (other.gameObject.TryGetComponent(out Damageable damageable))
-            {
-                damageable.AddDamage(_config.damage);
-            }
+            base.Init(playerModel, model);
+            _damageComponent.Init(_config.damage);
         }
     }
 }

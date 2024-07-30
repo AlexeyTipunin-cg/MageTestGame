@@ -21,7 +21,7 @@ namespace Skills
         public SkillModel[] GetSkillModels => _skills;
 
         [Inject]
-        private void Init(WizardConfig wizardConfig, PlayerModel playerModel)
+        private void Init(CreatureConfig wizardConfig, PlayerModel playerModel)
         {
             _skills = new SkillModel[wizardConfig.Skills.Length];
 
