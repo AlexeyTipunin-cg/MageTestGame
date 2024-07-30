@@ -13,10 +13,6 @@ namespace Enemy
         public void AddDamage(float damage)
         {
             _model.health.Value -= damage;
-            if (_model.IsDead())
-            {
-                Destroy(gameObject);
-            }
         }
     }
 }

@@ -15,7 +15,8 @@ namespace Enemy
         [SerializeField] private HealthBar _healthBar;
         [SerializeField] private Damageable _damageable;
 
-        private IPlayerInput _character;
+        public CompositeDisposable disposable;
+
         private IGetPosition _playerPosition;
         private Vector3 _rotation;
         private Vector3 _direction;
@@ -23,12 +24,14 @@ namespace Enemy
         private EnemyModel _model;
         private PlayerModel _playerModel;
 
-        public void Init(IPlayerInput characterController, IGetPosition playerPosition, EnemyModel model, PlayerModel playerModel)
+        public void Init( IGetPosition playerPosition, EnemyModel model, PlayerModel playerModel)
         {
+            disposable = new CompositeDisposable();
+
             _model = model;
             _playerModel = playerModel;
-            _character = characterController;
             _playerPosition = playerPosition;
+            _collidedWithPlayer = false;
 
             _healthBar.Init(Camera.main);
             _healthBar.SetProgress(_model.health.Value, _model.MaxHealth);
@@ -36,7 +39,7 @@ namespace Enemy
             _model.health.Subscribe(health =>
             {
                 _healthBar.SetProgress(health, _model.MaxHealth);
-            }).AddTo(this);
+            }).AddTo(disposable);
 
             _damageable.Init(_model);
 
@@ -44,13 +47,13 @@ namespace Enemy
             {
                 _collidedWithPlayer = true;
                 StartCoroutine(DamagePlayer());
-            }).AddTo(this);
+            }).AddTo(disposable);
 
-            this.OnCollisionExitAsObservable().Where(c => c.gameObject.layer == 6).Subscribe(_ =>
+            this.OnCollisionExitAsObservable().Where(c => c.gameObject.layer == (int)GameLayers.Player).Subscribe(_ =>
             {
                 _collidedWithPlayer = false;
                 StopAllCoroutines();
-            }).AddTo(this);
+            }).AddTo(disposable);
 
         }
 
@@ -80,19 +83,16 @@ namespace Enemy
             _rigidbody.velocity = _direction * _speed * Time.fixedDeltaTime;
         }
 
-        // private void OnParticleCollision(GameObject other)
-        // {
-        //     DamageComponent damage = other.GetComponent<DamageComponent>();
-        //     if (damage != null)
-        //     {
-        //         _model.health.Value -= damage.GetDamage() * 1;
-        //         _healthBar.SetProgress(_model.health.Value, _model.MaxHealth );
-        //         if (_model.IsDead())
-        //         {
-        //             Destroy(gameObject);
-        //         }
-        //     }
-        //
-        // }
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            disposable.Dispose();
+            disposable.Clear();
+            StopAllCoroutines();
+        }
     }
 }
