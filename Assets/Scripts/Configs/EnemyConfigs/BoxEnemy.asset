@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BoxEnemy
   m_EditorClassIdentifier: 
   health: 300
-  movementSpeed: 10
+  movementSpeed: 5
   rotationSpeed: 360
-  armor: 20
+  armor: 10
   Skills: []
   enemyType: 1
   damage: 20

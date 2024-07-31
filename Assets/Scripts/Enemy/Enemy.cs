@@ -108,8 +108,8 @@ namespace Enemy
             {
                 return;
             }
-            _rigidbody.rotation = Quaternion.Euler(new Vector3(0, _model.Config.rotationSpeed, 0));
-            _rigidbody.velocity = _direction * _model.Config.movementSpeed * Time.fixedDeltaTime;
+            _rigidbody.rotation = Quaternion.Euler(new Vector3(0, _rotation.y * _model.Config.rotationSpeed * Time.fixedDeltaTime, 0));
+            _rigidbody.velocity = _direction.normalized * _model.Config.movementSpeed;
         }
 
         private void OnDestroy()

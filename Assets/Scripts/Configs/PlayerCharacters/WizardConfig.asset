@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cfec7c9ba76cb42a9ea80a02f8bd78, type: 3}
   m_Name: WizardConfig
   m_EditorClassIdentifier: 
-  health: 100
-  movementSpeed: 10
+  health: 300
+  movementSpeed: 15
   rotationSpeed: 360
-  armor: 20
+  armor: 30
   Skills:
   - {fileID: 11400000, guid: 45da962121946454cb4c389edfcb2e02, type: 2}
   - {fileID: 11400000, guid: 6504219ffe17a874f9b1428e05a98f66, type: 2}

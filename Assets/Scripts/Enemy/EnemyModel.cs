@@ -1,12 +1,15 @@
 using Assets.Scripts.Enemy;
 using UniRx;
+using UnityEngine;
 
 namespace Enemy
 {
     public class EnemyModel
     {
-        public ReactiveProperty<float> health;
+        public IReadOnlyReactiveProperty<float> health;
         public IReadOnlyReactiveProperty<bool> isDead;
+        private ReactiveProperty<float> _health;
+
         public int MaxHealth { get; }
         public EnemyConfig Config { get; }
 
@@ -14,13 +17,20 @@ namespace Enemy
         {
             Config = config;
             MaxHealth = startHealth;
-            health = new ReactiveProperty<float>(startHealth);
+            _health = new ReactiveProperty<float>(startHealth);
+            health = _health;
             isDead = health.Select(h => IsDead()).ToReactiveProperty();
         }
 
         public bool IsDead()
         {
             return health.Value <= 0;
+        }
+
+        public void AddDamage(float damage)
+        {
+            float newHealth = health.Value - damage * (1 - Config.armor / 100);
+            _health.Value = Mathf.Max(newHealth, 0);
         }
 
 

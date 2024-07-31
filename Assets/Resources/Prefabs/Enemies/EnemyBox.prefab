@@ -129,9 +129,9 @@ GameObject:
   - component: {fileID: 3089057109392097233}
   - component: {fileID: 1875186995791267871}
   - component: {fileID: 8648944953100469363}
-  - component: {fileID: 177680018344966572}
   - component: {fileID: 7124254270069683730}
   - component: {fileID: 6136674364491832237}
+  - component: {fileID: 7584552601838178204}
   m_Layer: 7
   m_Name: EnemyBox
   m_TagString: Untagged
@@ -219,21 +219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyType: 1
   _rigidbody: {fileID: 7124254270069683730}
-  _protection: 0
   _healthBar: {fileID: 5174273746724079560}
-  _damageable: {fileID: 177680018344966572}
---- !u!114 &177680018344966572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3444806145942780475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2524c0d01d1243ebb5bfffba5a3c4880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _damageable: {fileID: 7584552601838178204}
 --- !u!54 &7124254270069683730
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -282,6 +269,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7584552601838178204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444806145942780475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2524c0d01d1243ebb5bfffba5a3c4880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5496217682674948482
 GameObject:
   m_ObjectHideFlags: 0

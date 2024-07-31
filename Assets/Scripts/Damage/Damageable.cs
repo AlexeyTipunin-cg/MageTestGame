@@ -13,14 +13,14 @@ namespace Enemy
         }
         public void AddDamage(float damage)
         {
-            _model.health.Value -= damage;
+            _model.AddDamage(damage);
         }
 
         private void OnParticleCollision(GameObject other)
         {
             if (other.TryGetComponent(out DamageComponent damage))
             {
-                _model.health.Value -= damage.GetDamage();
+                _model.AddDamage(damage.GetDamage());
             }
         }
     }

@@ -1,29 +1,37 @@
 using UniRx;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerModel
     {
-        public ReactiveProperty<float> health;
+        public IReadOnlyReactiveProperty<float> health;
         public IReadOnlyReactiveProperty<bool> isDead;
+
+        private CreatureConfig _creatureConfig;
+        private ReactiveProperty<float> _health;
         public int MaxHealth { get; }
 
         public PlayerModel(CreatureConfig config)
         {
+            _creatureConfig = config;
             MaxHealth = config.health;
-            health = new ReactiveProperty<float>(config.health);
+            _health = new ReactiveProperty<float>(config.health);
+            health = _health;
             isDead = health.Select(x => x <= 0).ToReactiveProperty();
         }
 
         public void SetHealth(float addHealth)
         {
-            health.Value = Mathf.Min(health.Value + addHealth, MaxHealth);
+            _health.Value = Mathf.Min(health.Value + addHealth, MaxHealth);
         }
 
         public void AddDamage(float damage)
         {
-            health.Value = Mathf.Max(health.Value - damage, 0);
+            float newHealth = health.Value - damage * (1 - _creatureConfig.armor / 100);
+
+            _health.Value = Mathf.Max(health.Value - damage, 0);
         }
     }
 }
