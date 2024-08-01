@@ -20,20 +20,10 @@ namespace Assets.Scripts.Scene
             return Vector2.Distance(_sceneCenter, new Vector2(pos.x, pos.z)) < _sceneRadius;
         }
 
-        //public bool CalculateClosePoint(Vector3 pos) { 
-        //    Mathf.
-        
-        //}
-
         public Vector3 SpawnPosition()
         {
             Vector3 randomPoint = RandomPointOnCircleEdge(_sceneRadius);
             return randomPoint;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawSphere(transform.position, _sceneRadius);
         }
 
         private Vector3 RandomPointOnCircleEdge(float radius)

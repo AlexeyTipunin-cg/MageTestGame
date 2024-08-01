@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Player;
+using Assets.Scripts.Scene;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -17,20 +15,22 @@ namespace Skills
         private SkillModel[] _skills;
         public ReactiveProperty<SkillModel> _currentSkill = new ReactiveProperty<SkillModel>();
         private int _currentSkillIndex;
+        private CreatureConfig _levelConfig;
 
         public SkillModel[] GetSkillModels => _skills;
 
         [Inject]
-        private void Init(CreatureConfig wizardConfig, PlayerModel playerModel)
+        private void Init(LevelConfig levelConfig, PlayerModel playerModel)
         {
-            _skills = new SkillModel[wizardConfig.Skills.Length];
+            CreatureConfig config = levelConfig.playerConfig;
+            _skills = new SkillModel[config.Skills.Length];
 
-            for (int i = 0; i < wizardConfig.Skills.Length; i++)
+            for (int i = 0; i < config.Skills.Length; i++)
             {
-                SkillModel model = new SkillModel(wizardConfig.Skills[i]);
+                SkillModel model = new SkillModel(config.Skills[i]);
                 _skills[i] = model;
 
-                SkillView prefab = _skillViews.First(view => view.GetSkillType == wizardConfig.Skills[i].skillType);
+                SkillView prefab = _skillViews.First(view => view.GetSkillType == config.Skills[i].skillType);
                 SkillView skillView = Instantiate(prefab, gameObject.transform);
                 skillView.Init(playerModel, model);
 
@@ -99,7 +99,7 @@ namespace Skills
             _currentSkill.Value = _skills[_currentSkillIndex];
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _playerInput.OnAttack -= Attack;
             _playerInput.OnNextSkill -= ChooseNextSkill;

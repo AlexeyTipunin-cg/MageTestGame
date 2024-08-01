@@ -1,3 +1,4 @@
+using Assets.Scripts.Scene;
 using UniRx;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
@@ -13,11 +14,11 @@ namespace Assets.Scripts.Player
         private ReactiveProperty<float> _health;
         public int MaxHealth { get; }
 
-        public PlayerModel(CreatureConfig config)
+        public PlayerModel(LevelConfig config)
         {
-            _creatureConfig = config;
-            MaxHealth = config.health;
-            _health = new ReactiveProperty<float>(config.health);
+            _creatureConfig = config.playerConfig;
+            MaxHealth = _creatureConfig.health;
+            _health = new ReactiveProperty<float>(_creatureConfig.health);
             health = _health;
             isDead = health.Select(x => x <= 0).ToReactiveProperty();
         }

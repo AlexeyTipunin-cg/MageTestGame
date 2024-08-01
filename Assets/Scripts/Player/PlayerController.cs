@@ -23,11 +23,11 @@ namespace Assets.Scripts.Player
         private float _verticalDirection;
 
         [Inject]
-        private void Init(Camera cameraInjected, CreatureConfig wizardConfig, ISceneLimits sceneLimits, PlayerModel playerModel)
+        private void Init(Camera cameraInjected, LevelConfig levelConfig, ISceneLimits sceneLimits, PlayerModel playerModel)
         {
             _camera = cameraInjected;
             _cameraCharacterDelta = gameObject.transform.position + _camera.transform.position;
-            _wizardConfig = wizardConfig;
+            _wizardConfig = levelConfig.playerConfig;
             _sceneLimits = sceneLimits;
 
             _animation.Init(playerModel);

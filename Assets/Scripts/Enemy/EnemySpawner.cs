@@ -32,11 +32,11 @@ namespace Enemy
         //private List<Vector3> points = new List<Vector3>();
 
         [Inject]
-        private void Init(LevelEnemies enemies, IGetPosition getPosition, ISceneLimits limits, PlayerModel playerModel)
+        private void Init(LevelConfig levelConfig, IGetPosition getPosition, ISceneLimits limits, PlayerModel playerModel)
         {
             _playerModel = playerModel;
             _sceneLimits = limits;
-            _levelEnemies = enemies;
+            _levelEnemies = levelConfig.levelEnemies;
             _enemyPool = new ObjectPool<Enemy>(CreateEnemy, OnGetFromPool, OnRelease, OnDestroyEnemy);
             _getPosition = getPosition;
             Observable.EveryUpdate().Where(_ => _enemyCounter < _enemyMaxCount)
