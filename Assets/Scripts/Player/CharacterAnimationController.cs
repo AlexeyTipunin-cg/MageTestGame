@@ -12,7 +12,13 @@ namespace Assets.Scripts.Player
 
         public void Init(PlayerModel model)
         {
-            model.isDead.Select(isDead => isDead).Subscribe(DieAnimation).AddTo(this);
+            model.isDead.Select(isDead => isDead).Subscribe(isDead =>
+            {
+                if (isDead)
+                {
+                    DieAnimation();
+                }
+            }).AddTo(this);
         }
         public void RunAnimation()
         {
@@ -28,7 +34,7 @@ namespace Assets.Scripts.Player
             _animator.speed = 1;
         }
 
-        public void DieAnimation(bool isDead)
+        public void DieAnimation()
         {
             _animator.SetBool("IsDie", true);
             _animator.speed = 1;
