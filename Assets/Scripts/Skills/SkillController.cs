@@ -7,16 +7,16 @@ using Zenject;
 
 namespace Skills
 {
-    public class SkillController : MonoBehaviour
+    public class SkillController : MonoBehaviour, ISkillController
     {
         [SerializeField] private PlayerInputController _playerInput;
         [SerializeField] private SkillView[] _skillViews;
 
         private SkillModel[] _skills;
-        public ReactiveProperty<SkillModel> _currentSkill = new ReactiveProperty<SkillModel>();
         private int _currentSkillIndex;
         private CreatureConfig _levelConfig;
 
+        public ReactiveProperty<SkillModel> CurrentSkill { get; private set; } = new ReactiveProperty<SkillModel>();
         public SkillModel[] GetSkillModels => _skills;
 
         [Inject]
@@ -40,16 +40,16 @@ namespace Skills
             _playerInput.OnNextSkill += ChooseNextSkill;
             _playerInput.OnPreviousSkill += ChoosePrevSkill;
 
-            _currentSkill.Value = _skills[0];
+            CurrentSkill.Value = _skills[0];
             _currentSkillIndex = 0;
         }
 
         private void Attack()
         {
-            if (_currentSkill.Value.IsActive)
+            if (CurrentSkill.Value.IsActive)
             {
-                _currentSkill.Value.Attack();
-                _currentSkill.Value.SetState(SkillState.Cooldown);
+                CurrentSkill.Value.Attack();
+                CurrentSkill.Value.SetState(SkillState.Cooldown);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Skills
                 _currentSkillIndex = 0;
             }
 
-            _currentSkill.Value = _skills[_currentSkillIndex];
+            CurrentSkill.Value = _skills[_currentSkillIndex];
         }
 
         private void ChoosePrevSkill()
@@ -96,7 +96,7 @@ namespace Skills
                 _currentSkillIndex = _skills.Length - 1;
             }
 
-            _currentSkill.Value = _skills[_currentSkillIndex];
+            CurrentSkill.Value = _skills[_currentSkillIndex];
         }
 
         private void OnDestroy()

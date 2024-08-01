@@ -19,7 +19,7 @@ namespace DefaultNamespace
         private float _maxHealth;
 
         [Inject]
-        private void Init(PlayerModel playerModel, SkillController skillController)
+        private void Init(PlayerModel playerModel, ISkillController skillController)
         {
             _maxHealth = playerModel.MaxHealth;
 
@@ -40,7 +40,7 @@ namespace DefaultNamespace
 
             for (int i = 0; i < skillController.GetSkillModels.Length; i++)
             {
-                _skillIcons[i].Init(skillController.GetSkillModels[i], skillController._currentSkill);
+                _skillIcons[i].Init(skillController.GetSkillModels[i], skillController.CurrentSkill);
             }
         }
 

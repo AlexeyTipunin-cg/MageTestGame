@@ -7,8 +7,8 @@ using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
-    [SerializeField] private PlayerInputController _player;
     [SerializeField] private Camera _camera;
+    [SerializeField] private PlayerInputController _player;
     [SerializeField] private Transform _playerSpawn;
     [SerializeField] private SceneController _sceneController;
     [SerializeField] private LevelConfig _levelConfig;
@@ -20,14 +20,12 @@ public class SceneInstaller : MonoInstaller
 
         Container.Bind<ISceneLimits>().To<SceneController>().FromInstance(_sceneController).AsSingle();
 
-        PlayerInputController player = Container.InstantiatePrefabForComponent<PlayerInputController>(_player,
+        GameObject player = Container.InstantiatePrefab(_player,
             _playerSpawn.position, Quaternion.identity,
             null);
 
-        Container.Bind<IPlayerInput>().To<PlayerInputController>().FromInstance(player).AsSingle();
-        Container.Bind<IGetPosition>().To<PlayerPosition>().FromComponentOn(player.gameObject).AsSingle();
-        Container.Bind<SkillController>().FromComponentOn(player.gameObject).AsSingle();
-        // Container.BindInterfacesAndSelfTo<PlayerInputController>().FromInstance(player).AsSingle();
-
+        Container.Bind<IPlayerInput>().To<PlayerInputController>().FromComponentOn(player).AsSingle();
+        Container.Bind<IGetPosition>().To<PlayerPosition>().FromComponentOn(player).AsSingle();
+        Container.Bind<ISkillController>().To<SkillController>().FromComponentOn(player).AsSingle();
     }
 }
