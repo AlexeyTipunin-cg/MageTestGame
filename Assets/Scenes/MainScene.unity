@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 132321537}
   - component: {fileID: 132321539}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,37 +217,6 @@ MonoBehaviour:
   _fill: {fileID: 1844218763}
   _chooseBack: {fileID: 746199216}
   _cooldownText: {fileID: 1704126280}
---- !u!1 &235041318
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 235041319}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &235041319
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 235041318}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.097055, y: 1.5464287, z: 10.071931}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &298000307
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +605,7 @@ GameObject:
   - component: {fileID: 491146111}
   - component: {fileID: 491146110}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Select_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -869,7 +838,7 @@ GameObject:
   - component: {fileID: 746199217}
   - component: {fileID: 746199216}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: Select_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1072,55 +1041,6 @@ RectTransform:
   m_AnchoredPosition: {x: -596, y: -237}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &832575517
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 832575519}
-  - component: {fileID: 832575518}
-  m_Layer: 0
-  m_Name: Global Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &832575518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832575517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
---- !u!4 &832575519
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832575517}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &839268015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1090,7 @@ GameObject:
   - component: {fileID: 861420827}
   - component: {fileID: 861420826}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: Select_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1245,7 +1165,7 @@ GameObject:
   - component: {fileID: 910945538}
   - component: {fileID: 910945537}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1379,7 +1299,7 @@ GameObject:
   - component: {fileID: 991316351}
   - component: {fileID: 991316350}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ProgressImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1693,7 +1613,7 @@ GameObject:
   - component: {fileID: 1141999018}
   - component: {fileID: 1141999017}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ProgressImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1785,12 +1705,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfedaf53547740ee985538ed928e0317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 827102571001578353, guid: a00de2b9367493844b54dc05f97b17a4, type: 3}
   _camera: {fileID: 330585545}
+  _player: {fileID: 827102571001578353, guid: a00de2b9367493844b54dc05f97b17a4, type: 3}
   _playerSpawn: {fileID: 1221265649}
-  _wizardConfig: {fileID: 11400000, guid: 234a92604433e264ea7af0f16f895a95, type: 2}
   _sceneController: {fileID: 679365709}
-  _levelEnemies: {fileID: 11400000, guid: 00eabb599dd8fc349ad6d72d82c1b1a2, type: 2}
+  _levelConfig: {fileID: 11400000, guid: 8e433b22f0409e342a839c34daef6787, type: 2}
 --- !u!4 &1170839518
 Transform:
   m_ObjectHideFlags: 0
@@ -2126,7 +2045,7 @@ GameObject:
   - component: {fileID: 1302920817}
   - component: {fileID: 1302920819}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2270,7 +2189,7 @@ GameObject:
   - component: {fileID: 1389591504}
   - component: {fileID: 1389591503}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2708,7 +2627,7 @@ GameObject:
   - component: {fileID: 1704126281}
   - component: {fileID: 1704126280}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2842,7 +2761,7 @@ GameObject:
   - component: {fileID: 1844218764}
   - component: {fileID: 1844218763}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ProgressImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2966,7 +2885,7 @@ GameObject:
   - component: {fileID: 1944248070}
   - component: {fileID: 1944248072}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3301,8 +3220,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 330585546}
   - {fileID: 410087041}
-  - {fileID: 832575519}
   - {fileID: 679365708}
   - {fileID: 1189486357}
   - {fileID: 1217755791}
-  - {fileID: 235041319}

@@ -69,6 +69,9 @@ namespace Enemy
                 StopAllCoroutines();
             }).AddTo(disposable);
 
+            Observable.EveryUpdate().Subscribe(_ => UpdateEnemy()).AddTo(disposable);
+            Observable.EveryUpdate().Subscribe(_ => FixedUpdateEnemy()).AddTo(disposable);
+
         }
 
         private IEnumerator DamagePlayer()
@@ -85,7 +88,7 @@ namespace Enemy
             }
         }
 
-        private void Update()
+        private void UpdateEnemy()
         {
             if (_isGameOver)
             {
@@ -97,7 +100,7 @@ namespace Enemy
             _rotation = Vector3.RotateTowards(transform.forward, _direction, 1000, 1000);
         }
 
-        private void FixedUpdate()
+        private void FixedUpdateEnemy()
         {
             if (_isGameOver)
             {

@@ -8,10 +8,12 @@ namespace DefaultNamespace
     public class HealthBar : MonoBehaviour
     {
         [SerializeField] private Transform _health;
-        private Camera _camera;
+        
+        private Transform _camera;
         public void Init(Camera cameraInject)
         {
-            _camera = cameraInject;
+            _camera = cameraInject.transform;
+            Observable.EveryLateUpdate().Subscribe(_ => LookAtCamera()).AddTo(this);
         }
 
         public void SetProgress(float currentVal, float maxVal)
@@ -21,10 +23,10 @@ namespace DefaultNamespace
             _health.transform.localScale = scale;
         }
 
-        private void LateUpdate()
+        private void LookAtCamera()
         {
             //transform.LookAt(_camera.transform.position);
-            transform.LookAt(transform.position + _camera.transform.rotation * Vector3.back, _camera.transform.rotation * Vector3.down);
+            transform.LookAt(transform.position + _camera.rotation * Vector3.back, _camera.rotation * Vector3.down);
 
         }
     }
