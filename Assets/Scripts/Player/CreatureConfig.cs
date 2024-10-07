@@ -7,7 +7,7 @@ namespace Assets.Scripts.Player
     public class CreatureConfig : ScriptableObject
     {
         public int health = 100;
-        public int movementSpeed = 10;
+        public float movementSpeed = 10;
         public int rotationSpeed = 360;
         [Range(0f, 100f)]
         public int armor = 20;

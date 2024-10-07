@@ -31,5 +31,10 @@ namespace Skills
         {
             command.Execute(new SkillData());
         }
+
+        public SkillType GetSkillType()
+        {
+            return _skill.skillType;
+        }
     }
 }

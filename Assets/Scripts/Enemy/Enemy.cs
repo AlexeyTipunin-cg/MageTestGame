@@ -70,7 +70,7 @@ namespace Enemy
             }).AddTo(disposable);
 
             Observable.EveryUpdate().Subscribe(_ => UpdateEnemy()).AddTo(disposable);
-            Observable.EveryUpdate().Subscribe(_ => FixedUpdateEnemy()).AddTo(disposable);
+            Observable.EveryFixedUpdate().Subscribe(_ => FixedUpdateEnemy()).AddTo(disposable);
 
         }
 

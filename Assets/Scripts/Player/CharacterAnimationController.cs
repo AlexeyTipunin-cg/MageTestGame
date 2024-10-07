@@ -10,16 +10,6 @@ namespace Assets.Scripts.Player
 
         [ContextMenu("Run animation")]
 
-        public void Init(PlayerModel model)
-        {
-            model.isDead.Select(isDead => isDead).Subscribe(isDead =>
-            {
-                if (isDead)
-                {
-                    DieAnimation();
-                }
-            }).AddTo(this);
-        }
         public void RunAnimation()
         {
             _animator.SetBool("IsRunning", true);

@@ -1,57 +1,70 @@
 using System;
 using Assets.Scripts.Player;
-using Assets.Scripts.Scene;
-using DefaultNamespace;
+using Skills;
 using UnityEngine;
-using Zenject;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
-using UniRx;
 
 public class PlayerInputController : MonoBehaviour, IPlayerInput
 {
-    [SerializeField] private Rigidbody _rigidbody;
+    private PlayerInput _playerInput;
 
-    private CreatureConfig _wizardConfig;
-    private Camera _camera;
-    private Vector3 _moveDirection;
-    private Vector3 _rotationDirection;
-    private Vector3 _cameraCharacterDelta;
-    public event Action OnAttack;
+    public event Action<SkillType> OnAttack;
     public event Action OnNextSkill;
     public event Action OnPreviousSkill;
 
-    private ISceneLimits _sceneLimits;
-    private bool _isGameOver;
+    public event Action<Vector2, bool> OnMove;
 
-    private float _verticalDirection;
-
-    [Inject]
-    private void Init(PlayerModel playerModel)
+    private void Awake()
     {
-        playerModel.isDead.Subscribe(isDead =>
-        {
-            _isGameOver = isDead;
-        });
+        _playerInput = new PlayerInput();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_isGameOver) { return; }
+        _playerInput.Enable();
+        _playerInput.Movement.Position.performed += OnLeftStick;
+        _playerInput.Movement.Position.canceled += OnLeftCancel;
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            OnAttack?.Invoke();
-        }
+        _playerInput.Movement.Skill_1.performed += OnSkill1;
+        _playerInput.Movement.Skill_2.performed += OnSkill2;
+        _playerInput.Movement.Skill_3.performed += OnSkill3;
+    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            OnPreviousSkill?.Invoke();
-        }
+    private void OnDisable()
+    {
+        _playerInput.Movement.Position.performed -= OnLeftStick;
+        _playerInput.Movement.Position.canceled -= OnLeftCancel;
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            OnNextSkill?.Invoke();
-        }
+        _playerInput.Movement.Skill_1.performed -= OnSkill1;
+        _playerInput.Movement.Skill_2.performed -= OnSkill2;
+        _playerInput.Movement.Skill_3.performed -= OnSkill3;
+        _playerInput.Disable();
+    }
+
+    private void OnLeftStick(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        Vector2 value = context.ReadValue<Vector2>();
+        OnMove?.Invoke(value, true);
+    }
+
+    private void OnLeftCancel(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        Vector2 value = context.ReadValue<Vector2>();
+        OnMove?.Invoke(Vector2.zero, false);
+    }
+
+    private void OnSkill3(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        OnAttack?.Invoke(SkillType.Heal);
+    }
+
+    private void OnSkill2(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        OnAttack?.Invoke(SkillType.Aoe);
+    }
+
+    private void OnSkill1(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        OnAttack?.Invoke(SkillType.Strike);
+
     }
 }

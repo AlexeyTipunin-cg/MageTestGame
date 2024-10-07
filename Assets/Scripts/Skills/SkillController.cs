@@ -44,8 +44,11 @@ namespace Skills
             _currentSkillIndex = 0;
         }
 
-        private void Attack()
+        private void Attack(SkillType skillType)
         {
+            SkillModel skill = _skills.Where(x => x.GetSkillType() == skillType).First();
+            CurrentSkill.Value = skill;
+
             if (CurrentSkill.Value.IsActive)
             {
                 CurrentSkill.Value.Attack();
@@ -70,6 +73,8 @@ namespace Skills
                 }
             }
         }
+
+
 
         private void ChooseNextSkill()
         {
