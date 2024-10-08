@@ -1,10 +1,8 @@
-using System.Collections;
 using Skills;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace DefaultNamespace.UI
 {

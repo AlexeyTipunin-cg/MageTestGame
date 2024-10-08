@@ -69,8 +69,8 @@ namespace Enemy
                 StopAllCoroutines();
             }).AddTo(disposable);
 
-            Observable.EveryUpdate().Subscribe(_ => UpdateEnemy()).AddTo(disposable);
-            Observable.EveryFixedUpdate().Subscribe(_ => FixedUpdateEnemy()).AddTo(disposable);
+            Observable.EveryUpdate().Where(_ => !_isGameOver).Subscribe(_ => UpdateEnemy()).AddTo(disposable);
+            Observable.EveryFixedUpdate().Where(_ => !_isGameOver && !_collidedWithPlayer).Subscribe(_ => FixedUpdateEnemy()).AddTo(disposable);
 
         }
 
@@ -90,11 +90,6 @@ namespace Enemy
 
         private void UpdateEnemy()
         {
-            if (_isGameOver)
-            {
-                return;
-            }
-
             Vector3 targetPosition = _playerPosition.GetPosition();
             _direction = targetPosition - transform.position;
             _rotation = Vector3.RotateTowards(transform.forward, _direction, 1000, 1000);
@@ -102,15 +97,6 @@ namespace Enemy
 
         private void FixedUpdateEnemy()
         {
-            if (_isGameOver)
-            {
-                return;
-            }
-
-            if (_collidedWithPlayer)
-            {
-                return;
-            }
             _rigidbody.rotation = Quaternion.Euler(new Vector3(0, _rotation.y * _model.Config.rotationSpeed * Time.fixedDeltaTime, 0));
             _rigidbody.velocity = _direction.normalized * _model.Config.movementSpeed;
         }

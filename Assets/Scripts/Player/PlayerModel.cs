@@ -1,6 +1,5 @@
 using Assets.Scripts.Scene;
 using UniRx;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
