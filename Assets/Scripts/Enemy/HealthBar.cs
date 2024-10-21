@@ -10,9 +10,9 @@ namespace DefaultNamespace
         [SerializeField] private Transform _health;
         
         private Transform _camera;
-        public void Init(Camera cameraInject)
+        public void Init()
         {
-            _camera = cameraInject.transform;
+            _camera = Camera.main.transform;
             Observable.EveryLateUpdate().Subscribe(_ => LookAtCamera()).AddTo(this);
         }
 

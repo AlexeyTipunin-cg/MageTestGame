@@ -68,8 +68,6 @@ namespace Assets.Scripts.Player
             }
 
             _stateMachine.Player.RigidBody.position = newPosition;
-
-            _stateMachine.Player.UpdateCameraPosition();
         }
 
         public override void RemoveInputCallbacks()

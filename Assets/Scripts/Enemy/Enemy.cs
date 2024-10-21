@@ -47,7 +47,7 @@ namespace Enemy
 
             }).AddTo(disposable);
 
-            _healthBar.Init(Camera.main);
+            _healthBar.Init();
             _healthBar.SetProgress(_model.health.Value, _model.MaxHealth);
 
             _model.health.Subscribe(health =>
