@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 6136674364491832237}
   - component: {fileID: 7584552601838178204}
   m_Layer: 7
-  m_Name: EnemyBox
+  m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

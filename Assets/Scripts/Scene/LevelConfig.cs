@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Enemy;
+﻿using Enemy;
 using Assets.Scripts.Player;
 using UnityEngine;
 

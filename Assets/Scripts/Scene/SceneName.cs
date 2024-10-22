@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Scene
 {
-    public interface IGetPosition
+    public enum SceneName
     {
-        Vector3 GetPosition();
-
+        Level_1 = 0
     }
 }

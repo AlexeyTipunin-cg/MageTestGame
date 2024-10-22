@@ -1,4 +1,4 @@
-using Assets.Scripts.Enemy;
+using Enemy;
 using UniRx;
 using UnityEngine;
 

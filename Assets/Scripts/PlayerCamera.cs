@@ -3,6 +3,7 @@ using UnityEngine;
 using Cinemachine;
 using Zenject;
 using Assets.Scripts.Player;
+using Assets.Scripts.UI;
 
 namespace Assets.Scripts
 {
@@ -10,10 +11,9 @@ namespace Assets.Scripts
     {
         [SerializeField] private CinemachineVirtualCamera _camera;
 
-        [Inject]
-        public void Init(IPlayerTransform playerTransform)
+        public void OnHeroCreated(GameObject hero)
         {
-            _camera.Follow = _camera.LookAt = playerTransform.GetTransform();
+            _camera.Follow = _camera.LookAt = hero.transform;
         }
 
     }

@@ -1,5 +1,5 @@
 using System.Collections;
-using Assets.Scripts.Enemy;
+using Enemy;
 using Assets.Scripts.Player;
 using DefaultNamespace;
 using UniRx;
@@ -17,7 +17,7 @@ namespace Enemy
 
         public CompositeDisposable disposable;
 
-        private IGetPosition _playerPosition;
+        private IGetHeroPosition _playerPosition;
         private Vector3 _rotation;
         private Vector3 _direction;
         private bool _collidedWithPlayer;
@@ -27,13 +27,17 @@ namespace Enemy
 
         public EnemyTypes EnemyType => _enemyType;
 
-        public void Init(IGetPosition playerPosition, EnemyModel model, PlayerModel playerModel)
+        public void SetupPlayerPosition(IGetHeroPosition heroPosition)
+        {
+            _playerPosition = heroPosition;
+        }
+
+        public void Init(EnemyModel model, PlayerModel playerModel)
         {
             disposable = new CompositeDisposable();
 
             _model = model;
             _playerModel = playerModel;
-            _playerPosition = playerPosition;
             _collidedWithPlayer = false;
 
             _playerModel.isDead.Subscribe(isDead =>

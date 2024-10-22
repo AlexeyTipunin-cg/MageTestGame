@@ -1,30 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Enemy;
+using System.Threading.Tasks;
+using Enemy;
 using Assets.Scripts.Player;
 using Assets.Scripts.Scene;
 using UniRx;
-using UniRx.Triggers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Enemy
 {
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private int _enemyMaxCount = 10;
-        [SerializeField] private Enemy[] _enemies;
 
         private PlayerModel _playerModel;
-        private IGetPosition _getPosition;
         private ISceneLimits _sceneLimits;
         private int _enemyCounter;
         private ObjectPool<Enemy> _enemyPool;
         private LevelEnemies _levelEnemies;
+        private IEnemyFactory _enemyFactory;
 
         private int _nextEnemy;
 
@@ -32,15 +30,18 @@ namespace Enemy
         //private List<Vector3> points = new List<Vector3>();
 
         [Inject]
-        private void Init(LevelConfig levelConfig, IGetPosition getPosition, ISceneLimits limits, PlayerModel playerModel)
+        private void Init(LevelConfig levelConfig, ISceneLimits limits, PlayerModel playerModel, IEnemyFactory enemyfactory)
         {
             _playerModel = playerModel;
             _sceneLimits = limits;
             _levelEnemies = levelConfig.levelEnemies;
-            _enemyPool = new ObjectPool<Enemy>(CreateEnemy, OnGetFromPool, OnRelease, OnDestroyEnemy);
-            _getPosition = getPosition;
-            Observable.EveryUpdate().Where(_ => _enemyCounter < _enemyMaxCount)
-                .Subscribe(_ => SpawnEnemy()).AddTo(this);
+            _enemyPool = new ObjectPool<Enemy>(CreateEnemyToPool, OnGetFromPool, OnRelease, OnDestroyEnemy);
+            _enemyFactory = enemyfactory;
+        }
+
+        public void StartSpawnerUpdate()
+        {
+            Observable.EveryUpdate().Where(_ => _enemyCounter < _enemyMaxCount).Subscribe(_ => SpawnEnemy()).AddTo(this);
         }
 
         private void SpawnEnemy()
@@ -48,16 +49,15 @@ namespace Enemy
             _enemyPool.Get();
         }
 
-        private Enemy CreateEnemy()
+        private Enemy CreateEnemyToPool()
         {
-            if (_nextEnemy > _enemies.Length - 1)
-            {
-                _nextEnemy = 0;
-            }
+            return CreateEnemy().Result;
+        }
 
-
-            Enemy enemy = Instantiate(_enemies[_nextEnemy]);
-            _nextEnemy++;
+        private async Task<Enemy> CreateEnemy()
+        {
+            var enemyObject = await _enemyFactory.CreateEnemy(EnemyTypes.Capsule);
+            Enemy enemy = enemyObject.GetComponent<Enemy>();
             return enemy;
         }
 
@@ -66,7 +66,7 @@ namespace Enemy
             enemy.gameObject.SetActive(true);
 
             EnemyModel model = MakeModel(enemy);
-            enemy.Init(_getPosition, model, _playerModel);
+            enemy.Init(model, _playerModel);
             model.isDead.Subscribe(isDead =>
             {
                 if (isDead)

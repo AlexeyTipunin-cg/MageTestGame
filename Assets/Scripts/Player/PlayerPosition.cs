@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerPosition : MonoBehaviour, IGetPosition, IPlayerTransform
+    public class PlayerPosition : MonoBehaviour, IGetHeroPosition, IPlayerTransform
     {
         public Vector3 GetPosition()
         {

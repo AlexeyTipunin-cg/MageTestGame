@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemy
+namespace Enemy
 {
 
     [CreateAssetMenu(fileName = "LevelEnemies", menuName = "GameConfigs/LevelCofigs/Enemies", order = 0)]

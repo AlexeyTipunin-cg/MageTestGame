@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemy
+namespace Enemy
 {
     [CreateAssetMenu(fileName = "EnemyConfig", menuName = "GameConfigs/GameCharacters/EnemyCreature", order = 0)]
 
