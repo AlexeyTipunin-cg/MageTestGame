@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.ResourceManagement;
+﻿using Assets.Scripts.Player;
+using Assets.Scripts.ResourceManagement;
 using DefaultNamespace;
+using Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +17,25 @@ namespace Assets.Scripts.UI
         private const string HUD_NAME = "HUD";
         private readonly DiContainer _container;
         private readonly IAssetsProvider _assetsProvider;
+        private readonly ISkillsFactory _skillFactory;
 
-        public UIFactory(DiContainer container, IAssetsProvider assetsProvider)
+        public UIFactory(DiContainer container, IAssetsProvider assetsProvider, ISkillsFactory skillFactory)
         {
             _container = container;
             _assetsProvider = assetsProvider;
+            _skillFactory = skillFactory;
         }
-        public async Task<HUDController> CreateHUD()
+        public async Task<HUDController> CreateHUD(PlayerModel playerModel)
         {
             GameObject prefab = await _assetsProvider.Load<GameObject>(HUD_NAME);
-            HUDController hud = _container.InstantiatePrefab(prefab).GetComponentInChildren<HUDController>();
+
+            GameObject gameObject = UnityEngine.Object.Instantiate(prefab);
+            _container.InjectGameObject(gameObject);
+
+            HUDController hud = gameObject.GetComponentInChildren<HUDController>();
+
+            hud.SetUpSkillIcons(_skillFactory.SkillController);
+            hud.Launch(playerModel);
             return hud;
         }
 

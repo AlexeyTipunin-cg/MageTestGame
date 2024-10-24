@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Scene;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
@@ -16,5 +17,6 @@ namespace Assets.Scripts.ResourceManagement
         public void Release(string key);
 
         public void Cleanup();
+        Task<SceneInstance> LoadScene(SceneName sceneName, Action<SceneName> onLoaded = null, CancellationToken cancellationToken = default);
     }
 }

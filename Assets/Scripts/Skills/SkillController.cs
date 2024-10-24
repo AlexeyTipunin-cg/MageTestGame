@@ -9,8 +9,9 @@ namespace Skills
 {
     public class SkillController : MonoBehaviour, ISkillController
     {
-        [SerializeField] private PlayerInputController _playerInput;
         [SerializeField] private SkillView[] _skillViews;
+        
+        private PlayerInputController _playerInput;
 
         private SkillModel[] _skills;
         private int _currentSkillIndex;
@@ -20,7 +21,12 @@ namespace Skills
         public SkillModel[] GetSkillModels => _skills;
 
         [Inject]
-        private void Init(LevelConfig levelConfig, PlayerModel playerModel)
+        private void Init(PlayerInputController playerInputController)
+        {
+            _playerInput = playerInputController;
+        }
+
+        public void Lanch(LevelConfig levelConfig, PlayerModel playerModel)
         {
             CreatureConfig config = levelConfig.playerConfig;
             _skills = new SkillModel[config.Skills.Length];
@@ -42,6 +48,8 @@ namespace Skills
 
             CurrentSkill.Value = _skills[0];
             _currentSkillIndex = 0;
+
+            Observable.EveryUpdate().Subscribe(UpdateController).AddTo(this);
         }
 
         private void Attack(SkillType skillType)
@@ -56,7 +64,7 @@ namespace Skills
             }
         }
 
-        private void Update()
+        private void UpdateController(long time)
         {
             for (int i = 0; i < _skills.Length; i++)
             {

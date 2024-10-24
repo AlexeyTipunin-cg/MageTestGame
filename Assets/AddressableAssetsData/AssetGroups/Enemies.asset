@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4730ecd12487abb4dac2be8abb23f540
+    m_Address: EnemySpawner
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3c9a33fd74344024791ab2f2be220e28, type: 2}
   m_SchemaSet:

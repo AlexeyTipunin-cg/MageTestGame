@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.ResourceManagement;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Enemy
+namespace Assets.Scripts.Enemy
 {
     public interface IEnemyFactory
     {

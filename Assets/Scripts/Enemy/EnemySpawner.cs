@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Enemy;
 using Assets.Scripts.Player;
 using Assets.Scripts.Scene;
 using UniRx;
@@ -10,17 +9,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
+using Assets.Scripts.Enemy;
 
 namespace Enemy
 {
-    public class EnemySpawner : MonoBehaviour
+    public class EnemySpawner : MonoBehaviour, IEnemySpawner
     {
         [SerializeField] private int _enemyMaxCount = 10;
 
         private PlayerModel _playerModel;
         private ISceneLimits _sceneLimits;
         private int _enemyCounter;
-        private ObjectPool<Enemy> _enemyPool;
+        private ObjectPool<EnemyController> _enemyPool;
         private LevelEnemies _levelEnemies;
         private IEnemyFactory _enemyFactory;
 
@@ -30,13 +30,18 @@ namespace Enemy
         //private List<Vector3> points = new List<Vector3>();
 
         [Inject]
-        private void Init(LevelConfig levelConfig, ISceneLimits limits, PlayerModel playerModel, IEnemyFactory enemyfactory)
+        private void Init(IEnemyFactory enemyfactory)
+        {
+ 
+            _enemyPool = new ObjectPool<EnemyController>(CreateEnemyToPool, OnGetFromPool, OnRelease, OnDestroyEnemy);
+            _enemyFactory = enemyfactory;
+        }
+
+        public void SetLevelData(LevelConfig levelConfig, ISceneLimits limits, PlayerModel playerModel)
         {
             _playerModel = playerModel;
             _sceneLimits = limits;
             _levelEnemies = levelConfig.levelEnemies;
-            _enemyPool = new ObjectPool<Enemy>(CreateEnemyToPool, OnGetFromPool, OnRelease, OnDestroyEnemy);
-            _enemyFactory = enemyfactory;
         }
 
         public void StartSpawnerUpdate()
@@ -49,19 +54,19 @@ namespace Enemy
             _enemyPool.Get();
         }
 
-        private Enemy CreateEnemyToPool()
+        private EnemyController CreateEnemyToPool()
         {
             return CreateEnemy().Result;
         }
 
-        private async Task<Enemy> CreateEnemy()
+        private async Task<EnemyController> CreateEnemy()
         {
             var enemyObject = await _enemyFactory.CreateEnemy(EnemyTypes.Capsule);
-            Enemy enemy = enemyObject.GetComponent<Enemy>();
+            EnemyController enemy = enemyObject.GetComponent<EnemyController>();
             return enemy;
         }
 
-        private void OnGetFromPool(Enemy enemy)
+        private void OnGetFromPool(EnemyController enemy)
         {
             enemy.gameObject.SetActive(true);
 
@@ -82,14 +87,14 @@ namespace Enemy
             _enemyCounter++;
         }
 
-        private EnemyModel MakeModel(Enemy enemy)
+        private EnemyModel MakeModel(EnemyController enemy)
         {
             EnemyConfig config = _levelEnemies.enemies.First(e => e.enemyType == enemy.EnemyType);
             EnemyModel enemyModel = new EnemyModel(config.health, config);
             return enemyModel;
         }
 
-        private void OnRelease(Enemy enemy)
+        private void OnRelease(EnemyController enemy)
         {
             enemy.gameObject.SetActive(false);
             enemy.Dispose();
@@ -97,7 +102,7 @@ namespace Enemy
             _enemyCounter = Math.Max(_enemyCounter, 0);
         }
 
-        private void OnDestroyEnemy(Enemy enemy)
+        private void OnDestroyEnemy(EnemyController enemy)
         {
             Destroy(enemy);
         }

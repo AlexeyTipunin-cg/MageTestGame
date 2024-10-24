@@ -3,7 +3,7 @@ using Assets.Scripts.Player;
 using Skills;
 using UnityEngine;
 
-public class PlayerInputController : MonoBehaviour, IPlayerInput
+public class PlayerInputController : IPlayerInput, IDisposable
 {
     private PlayerInput _playerInput;
 
@@ -13,12 +13,18 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
 
     public event Action<Vector2, bool> OnMove;
 
-    private void Awake()
+    public PlayerInputController()
     {
         _playerInput = new PlayerInput();
+        EnableInput();
     }
 
-    private void OnEnable()
+    public void Dispose()
+    {
+        DisableInput();
+    }
+
+    private void EnableInput()
     {
         _playerInput.Enable();
         _playerInput.Movement.Position.performed += OnLeftStick;
@@ -29,7 +35,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerInput
         _playerInput.Movement.Skill_3.performed += OnSkill3;
     }
 
-    private void OnDisable()
+    private void DisableInput()
     {
         _playerInput.Movement.Position.performed -= OnLeftStick;
         _playerInput.Movement.Position.canceled -= OnLeftCancel;

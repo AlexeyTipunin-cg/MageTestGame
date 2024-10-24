@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Player;
-using Assets.Scripts.ResourceManagement;
+﻿using Assets.Scripts.Scene;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -10,6 +9,8 @@ namespace Assets.Scripts.Player
     {
         public event Action<GameObject> onPlayerCreated;
         IGetHeroPosition HeroPosition { get; }
-        public Task<GameObject> CreateHero();
+        public Task<GameObject> CreateHero(Vector3 postion, LevelConfig levelConfig, ISceneLimits limits, PlayerModel playerModel);
+
+        public GameObject GetHero();
     }
 }

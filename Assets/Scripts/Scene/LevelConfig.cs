@@ -10,5 +10,8 @@ namespace Assets.Scripts.Scene
     {
         public CreatureConfig playerConfig;
         public LevelEnemies levelEnemies;
+        [SerializeField][Range(0, 100f)] private float _sceneRadius;
+
+        public float SceneRadius { get => _sceneRadius; }
     }
 }

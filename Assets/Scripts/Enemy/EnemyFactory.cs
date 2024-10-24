@@ -1,14 +1,13 @@
-﻿using Enemy;
-using Assets.Scripts.Player;
+﻿using Assets.Scripts.Player;
 using Assets.Scripts.ResourceManagement;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using System;
 using System.Collections.Generic;
+using Enemy;
 
-namespace Enemy
+namespace Assets.Scripts.Enemy
 {
     public class EnemyFactory : IEnemyFactory
     {
@@ -26,8 +25,10 @@ namespace Enemy
         public async Task<GameObject> CreateEnemy(EnemyTypes type)
         {
             GameObject enemyPrefab = await _assetsProvider.Load<GameObject>(type.ToString());
-            var enemy = _container.InstantiatePrefab(enemyPrefab);
-            enemy.GetComponent<Enemy>().SetupPlayerPosition(_heroPosition.HeroPosition);
+            var enemy = UnityEngine.Object.Instantiate(enemyPrefab);
+            _container.InjectGameObject(enemy);
+
+            enemy.GetComponent<EnemyController>().SetupPlayerPosition(_heroPosition.HeroPosition);
             return enemy;
         }
 

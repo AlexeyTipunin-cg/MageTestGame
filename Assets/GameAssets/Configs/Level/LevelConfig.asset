@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerConfig: {fileID: 11400000, guid: 234a92604433e264ea7af0f16f895a95, type: 2}
   levelEnemies: {fileID: 11400000, guid: 00eabb599dd8fc349ad6d72d82c1b1a2, type: 2}
+  _sceneRadius: 50

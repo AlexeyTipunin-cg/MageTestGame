@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEditor.Build.Pipeline.WriteTypes;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -65,6 +66,17 @@ namespace Assets.Scripts.ResourceManagement
             cancellationToken.ThrowIfCancellationRequested();
 
             return result;
+        }
+
+        public async Task<SceneInstance> LoadScene(SceneName sceneName, Action<SceneName> onLoaded = null, CancellationToken cancellationToken = default)
+        {
+            var scene = await LoadScene(sceneName, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            scene.ActivateAsync();
+
+            onLoaded?.Invoke(sceneName);
+            return scene;
         }
 
         public async Task<SceneInstance> LoadScene(SceneName sceneName, CancellationToken cancellationToken = default)

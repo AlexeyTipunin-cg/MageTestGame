@@ -8,12 +8,12 @@ namespace Assets.Scripts.Player
     {
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private CharacterAnimationController _animation;
-        [SerializeField] private PlayerInputController _playerInputController;
         [SerializeField] private WallDetection _wallDetection;
 
         private PlayerStateMachine _playerStateMachine;
         private CreatureConfig _wizardConfig;
-
+        private PlayerInputController _playerInputController;
+        private PlayerModel _playerModel;
         private ISceneLimits _sceneLimits;
 
         private bool _collidedWithWall;
@@ -22,12 +22,17 @@ namespace Assets.Scripts.Player
         public PlayerInputController Input => _playerInputController;
         public WallDetection WallDetection => _wallDetection; 
         public CreatureConfig WizardConfig => _wizardConfig;
+
         public ISceneLimits SceneLimits => _sceneLimits;
 
-
         [Inject]
-        private void Init(LevelConfig levelConfig, ISceneLimits sceneLimits, PlayerModel playerModel)
+        private void Init(PlayerInputController playerInputController)
         {
+            _playerInputController = playerInputController;
+        }
+        public void Launch(PlayerModel playerModel, LevelConfig levelConfig, ISceneLimits sceneLimits)
+        {
+
             _wizardConfig = levelConfig.playerConfig;
             _sceneLimits = sceneLimits;
 
@@ -35,8 +40,11 @@ namespace Assets.Scripts.Player
 
             playerModel.isDead.Subscribe(isDead =>
             {
-                _playerStateMachine.ChangeState(_playerStateMachine.DeadState);
-            });
+                if (isDead)
+                {
+                    _playerStateMachine.ChangeState(_playerStateMachine.DeadState);
+                }
+            }).AddTo(this);
 
             _playerStateMachine.ChangeState(_playerStateMachine.IdleState);
         }

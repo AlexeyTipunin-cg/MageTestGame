@@ -2,7 +2,7 @@ using Enemy;
 using UniRx;
 using UnityEngine;
 
-namespace Enemy
+namespace Assets.Scripts.Enemy
 {
     public class EnemyModel
     {

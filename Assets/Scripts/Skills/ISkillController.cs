@@ -1,4 +1,6 @@
-﻿using UniRx;
+﻿using Assets.Scripts.Player;
+using Assets.Scripts.Scene;
+using UniRx;
 
 namespace Skills
 {
@@ -6,5 +8,7 @@ namespace Skills
     {
         ReactiveProperty<SkillModel> CurrentSkill { get; }
         SkillModel[] GetSkillModels { get; }
+
+        void Lanch(LevelConfig levelConfig, PlayerModel playerModel);
     }
 }

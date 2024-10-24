@@ -1,12 +1,10 @@
-using System;
 using DefaultNamespace.UI;
 using Skills;
 using UnityEngine;
-using TMPro;
 using UniRx;
-using UnityEngine.SceneManagement;
 using Zenject;
 using Assets.Scripts.Player;
+using Assets.Scripts.GameStates;
 
 namespace DefaultNamespace
 {
@@ -17,18 +15,21 @@ namespace DefaultNamespace
         [SerializeField] private SkillIcon[] _skillIcons;
 
         private float _maxHealth;
+        private GameStateMachine _gameStateMachine;
 
         [Inject]
-        private void Init(PlayerModel playerModel, ISkillController skillController)
+        private void Init(GameStateMachine stateMachine)
+        {
+            _gameStateMachine = stateMachine;
+            _endScreen.restartButton.onClick.AddListener(RestartScene);
+        }
+
+        public void Launch(PlayerModel playerModel)
         {
             _maxHealth = playerModel.MaxHealth;
-
             SetProgressBar(playerModel.health.Value);
 
             playerModel.health.Subscribe(SetProgressBar).AddTo(this);
-
-            _endScreen.restartButton.onClick.AddListener(RestartScene);
-
 
             playerModel.isDead.Subscribe(isDead =>
             {
@@ -37,7 +38,10 @@ namespace DefaultNamespace
                     _endScreen.gameObject.SetActive(true);
                 }
             });
+        }
 
+        public void SetUpSkillIcons(ISkillController skillController)
+        {
             for (int i = 0; i < skillController.GetSkillModels.Length; i++)
             {
                 _skillIcons[i].Init(skillController.GetSkillModels[i], skillController.CurrentSkill);
@@ -46,8 +50,8 @@ namespace DefaultNamespace
 
         private void RestartScene()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             _endScreen.gameObject.SetActive(false);
+            _gameStateMachine.ChangeState(nameof(CoreGameState));
         }
 
         private void SetProgressBar(float health)

@@ -1,4 +1,5 @@
 using Assets.Scripts.Damage;
+using Assets.Scripts.Enemy;
 using UnityEngine;
 
 namespace Enemy

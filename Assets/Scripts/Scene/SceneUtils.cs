@@ -1,28 +1,26 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Scene
 {
-    public class SceneController : MonoBehaviour, ISceneLimits
+    public class SceneUtils : ISceneLimits
     {
-        [Range(0f, 100f)]
-        [SerializeField] private float _sceneRadius;
+        private readonly LevelConfig _levelConfig;
 
         private Vector2 _sceneCenter;
 
-        private void Start()
+        public SceneUtils(LevelConfig levelConfig)
         {
-            _sceneCenter = new Vector2(transform.position.x, transform.position.z);
+            _levelConfig = levelConfig;
         }
 
         public bool isInsideScene(Vector3 pos)
         {
-            return Vector2.Distance(_sceneCenter, new Vector2(pos.x, pos.z)) < _sceneRadius;
+            return Vector2.Distance(Vector2.zero, new Vector2(pos.x, pos.z)) < _levelConfig.SceneRadius;
         }
 
         public Vector3 SpawnPosition()
         {
-            Vector3 randomPoint = RandomPointOnCircleEdge(_sceneRadius);
+            Vector3 randomPoint = RandomPointOnCircleEdge(_levelConfig.SceneRadius);
             return randomPoint;
         }
 

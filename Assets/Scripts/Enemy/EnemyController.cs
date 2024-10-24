@@ -1,14 +1,14 @@
 using System.Collections;
-using Enemy;
 using Assets.Scripts.Player;
 using DefaultNamespace;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Assets.Scripts.Enemy;
 
 namespace Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class EnemyController : MonoBehaviour
     {
         [SerializeField] private EnemyTypes _enemyType;
         [SerializeField] private Rigidbody _rigidbody;

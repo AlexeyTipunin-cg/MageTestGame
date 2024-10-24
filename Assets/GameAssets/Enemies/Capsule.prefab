@@ -237,12 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3444806145942780475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efdf1dcd7af64c1e919e26ffa5219bb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4289c3c12022a74409ed57c2f0a7fbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
   _rigidbody: {fileID: 7124254270069683730}
-  _protection: 0
   _healthBar: {fileID: 5174273746724079560}
   _damageable: {fileID: 177680018344966572}
 --- !u!54 &7124254270069683730

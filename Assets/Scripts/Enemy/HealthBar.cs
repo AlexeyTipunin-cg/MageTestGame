@@ -25,9 +25,11 @@ namespace DefaultNamespace
 
         private void LookAtCamera()
         {
+            if (_camera)
+            {
+                transform.LookAt(transform.position + _camera.rotation * Vector3.back, _camera.rotation * Vector3.down);
+            }
             //transform.LookAt(_camera.transform.position);
-            transform.LookAt(transform.position + _camera.rotation * Vector3.back, _camera.rotation * Vector3.down);
-
         }
     }
 }
