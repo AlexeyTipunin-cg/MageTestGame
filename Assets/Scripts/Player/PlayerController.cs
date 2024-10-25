@@ -17,6 +17,7 @@ namespace Assets.Scripts.Player
         private ISceneLimits _sceneLimits;
 
         private bool _collidedWithWall;
+        private ICameraProvider _cameraProvider;
 
         public Rigidbody RigidBody => _rigidbody;
         public PlayerInputController Input => _playerInputController;
@@ -26,9 +27,10 @@ namespace Assets.Scripts.Player
         public ISceneLimits SceneLimits => _sceneLimits;
 
         [Inject]
-        private void Init(PlayerInputController playerInputController)
+        private void Init(PlayerInputController playerInputController, ICameraProvider cameraProvider)
         {
             _playerInputController = playerInputController;
+            _cameraProvider = cameraProvider;
         }
         public void Launch(PlayerModel playerModel, LevelConfig levelConfig, ISceneLimits sceneLimits)
         {
@@ -47,6 +49,8 @@ namespace Assets.Scripts.Player
             }).AddTo(this);
 
             _playerStateMachine.ChangeState(_playerStateMachine.IdleState);
+
+            _cameraProvider.GetCamera().OnHeroCreated(gameObject.transform);
         }
 
         private void Update()

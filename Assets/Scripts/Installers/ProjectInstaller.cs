@@ -14,6 +14,7 @@ namespace Assets.Scripts.Installers
             Container.BindInterfacesAndSelfTo<AssetsProviderService>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerInputController>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelConfigLoader>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CameraProvider>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<HeroFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();

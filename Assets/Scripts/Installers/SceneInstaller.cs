@@ -1,10 +1,9 @@
-using Assets.Scripts.Player;
+using Assets.Scripts;
 using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        //Container.Bind<PlayerModel>().AsSingle();
     }
 }

@@ -4,6 +4,7 @@ using Assets.Scripts.Player;
 using Assets.Scripts.ResourceManagement;
 using Assets.Scripts.Scene;
 using Assets.Scripts.UI;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.GameStates
@@ -38,20 +39,17 @@ namespace Assets.Scripts.GameStates
 
         private async void OnLoaded(SceneName name)
         {
+            await Task.Yield();
+
             LevelConfig config = await _levelConfigLoader.LoadConfig(SceneName.Level_1.ToString());
             ISceneLimits sceneLimits = new SceneUtils(config);
             PlayerModel playerModel = new PlayerModel(config);
 
-            GameObject hero = await _hero.CreateHero(new Vector3(0, 0.519999981f, 0), config, sceneLimits, playerModel);
+            await _hero.CreateHero(new Vector3(0, 0.519999981f, 0), config, sceneLimits, playerModel);
             await _skillsFactory.CreateSkillController(config, playerModel);
             await _uiFactory.CreateHUD(playerModel);
             await _enemyFactory.LoadEnemies();
             await _enemySpawnerFactory.CreateEnemySpawner(config, sceneLimits, playerModel);
-
-            PlayerCamera playerCamera = Object.FindObjectOfType<PlayerCamera>();
-            playerCamera.OnHeroCreated(hero);
-            //_camera.OnHeroCreated(hero);
-            //_enemySpawner.StartSpawnerUpdate();
         }
 
         public void Exit()
