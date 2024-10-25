@@ -5,8 +5,9 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using Assets.Scripts.Enemy;
+using Enemy;
 
-namespace Enemy
+namespace Assets.Scripts.Enemy
 {
     public class EnemyController : MonoBehaviour
     {

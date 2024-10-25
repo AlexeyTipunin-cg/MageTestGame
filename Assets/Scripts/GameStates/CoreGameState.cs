@@ -39,8 +39,6 @@ namespace Assets.Scripts.GameStates
 
         private async void OnLoaded(SceneName name)
         {
-            await Task.Yield();
-
             LevelConfig config = await _levelConfigLoader.LoadConfig(SceneName.Level_1.ToString());
             ISceneLimits sceneLimits = new SceneUtils(config);
             PlayerModel playerModel = new PlayerModel(config);

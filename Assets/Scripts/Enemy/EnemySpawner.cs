@@ -10,8 +10,9 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
 using Assets.Scripts.Enemy;
+using Enemy;
 
-namespace Enemy
+namespace Assets.Scripts.Enemy
 {
     public class EnemySpawner : MonoBehaviour, IEnemySpawner
     {
@@ -23,6 +24,7 @@ namespace Enemy
         private ObjectPool<EnemyController> _enemyPool;
         private LevelEnemies _levelEnemies;
         private IEnemyFactory _enemyFactory;
+        private List<EnemyTypes> _enemyTypes;
 
         private int _nextEnemy;
 
@@ -42,6 +44,8 @@ namespace Enemy
             _playerModel = playerModel;
             _sceneLimits = limits;
             _levelEnemies = levelConfig.levelEnemies;
+            _enemyTypes = _levelEnemies.enemies.Select(enemy => enemy.enemyType).ToList();
+
         }
 
         public void StartSpawnerUpdate()
@@ -61,7 +65,8 @@ namespace Enemy
 
         private async Task<EnemyController> CreateEnemy()
         {
-            var enemyObject = await _enemyFactory.CreateEnemy(EnemyTypes.Capsule);
+            int enemyInt = UnityEngine.Random.Range(0, _enemyTypes.Count);
+            var enemyObject = await _enemyFactory.CreateEnemy(_enemyTypes[enemyInt]);
             EnemyController enemy = enemyObject.GetComponent<EnemyController>();
             return enemy;
         }
